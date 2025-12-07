@@ -52,13 +52,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] For each module folder (`/docs/modules/module-X`), create 2-5 chapter markdown files (e.g., `/docs/modules/module-1/chapter-1-intro.md`, `/docs/modules/module-1/chapter-2.md`).
-- [ ] T010 [P] [US1] Add Docusaurus frontmatter to each chapter markdown file for sidebar navigation.
-- [ ] T011 [P] [US1] Add a chapter title and a placeholder summary paragraph to each chapter markdown file.
-- [ ] T012 [US1] Within each chapter markdown file, outline 3-7 sections using markdown headers (`## Section Title`).
-- [ ] T013 [P] [US1] For each section, add 1-3 optional subsections using `### Subsection Title` headers.
-- [ ] T014 [P] [US1] Include placeholder introduction paragraphs for each section and subsection.
-- [ ] T015 [US1] Add a "Key Takeaways" placeholder at the end of each chapter markdown file.
+- [X] T009 [US1] For each module folder (`/docs/modules/module-X`), create 2-5 chapter markdown files (e.g., `/docs/modules/module-1/chapter-1-intro.md`, `/docs/modules/module-1/chapter-2.md`).
+- [X] T010 [P] [US1] Add Docusaurus frontmatter to each chapter markdown file for sidebar navigation.
+- [X] T011 [P] [US1] Add a chapter title and a placeholder summary paragraph to each chapter markdown file.
+- [X] T012 [US1] Within each chapter markdown file, outline 3-7 sections using markdown headers (`## Section Title`).
+- [X] T013 [P] [US1] For each section, add 1-3 optional subsections using `### Subsection Title` headers.
+- [X] T014 [P] [US1] Include placeholder introduction paragraphs for each section and subsection.
+- [X] T015 [US1] Add a "Key Takeaways" placeholder at the end of each chapter markdown file.
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
