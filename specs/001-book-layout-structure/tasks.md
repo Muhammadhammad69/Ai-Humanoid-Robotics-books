@@ -87,9 +87,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T018 [US3] Create `appendices.md` in `/docs/` for future reference material.
-- [ ] T019 [US3] Create `glossary.md` in `/docs/` for key terms and definitions.
-- [ ] T020 [US3] Ensure `docusaurus.config.js` includes links to these new pages in the sidebar or navbar if desired.
+- [X] T018 [US3] Create `appendices.md` in `/docs/` for future reference material.
+- [X] T019 [US3] Create `glossary.md` in `/docs/` for key terms and definitions.
+- [X] T020 [US3] Ensure `docusaurus.config.js` includes links to these new pages in the sidebar or navbar if desired.
 
 **Checkpoint**: All user stories should now be independently functional
 

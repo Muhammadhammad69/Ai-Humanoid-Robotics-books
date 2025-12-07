@@ -80,8 +80,11 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Modules',
         },
+        {to: '/docs/preface', label: 'Preface', position: 'left'},
+        {to: '/docs/appendices', label: 'Appendices', position: 'left'},
+        {to: '/docs/glossary', label: 'Glossary', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
