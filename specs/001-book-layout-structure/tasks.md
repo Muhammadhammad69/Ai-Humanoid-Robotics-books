@@ -72,8 +72,8 @@
 
 ### Implementation for User Story 2
 
-- [ ] T016 [US2] Create `preface.md` in `/docs/` with book purpose, target audience, and how to use the book.
-- [ ] T017 [US2] Create a dedicated `toc.md` in `/docs/` or confirm `sidebars.js` auto-generates the TOC correctly. If `toc.md` is created, ensure it links to all modules and chapters.
+- [X] T016 [US2] Create `preface.md` in `/docs/` with book purpose, target audience, and how to use the book.
+- [X] T017 [US2] Create a dedicated `toc.md` in `/docs/` or confirm `sidebars.js` auto-generates the TOC correctly. If `toc.md` is created, ensure it links to all modules and chapters.
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
