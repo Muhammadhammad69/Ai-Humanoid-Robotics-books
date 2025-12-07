@@ -22,10 +22,10 @@
 
 **Purpose**: Docusaurus project initialization and basic configuration.
 
-- [ ] T001 Initialize a Docusaurus project at the repository root.
-- [ ] T002 Configure `docusaurus.config.js` with basic site metadata (title, tagline, author).
-- [ ] T003 Configure `sidebars.js` for initial auto-generated table of contents.
-- [ ] T004 Install necessary Node.js dependencies for Docusaurus.
+- [X] T001 Initialize a Docusaurus project at the repository root.
+- [X] T002 Configure `docusaurus.config.js` with basic site metadata (title, tagline, author).
+- [X] T003 Configure `sidebars.js` for initial auto-generated table of contents.
+- [X] T004 Install necessary Node.js dependencies for Docusaurus.
 
 ---
 
