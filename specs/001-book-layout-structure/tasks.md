@@ -99,13 +99,13 @@
 
 **Purpose**: Final validation, navigation, and quality checks.
 
-- [ ] T021 Verify the entire folder structure under `/docs/` matches the layout plan.
-- [ ] T022 Confirm chapter → section → subsection hierarchy is consistent across all modules.
-- [ ] T023 Ensure Docusaurus sidebar recognizes all modules and chapters correctly.
-- [ ] T024 Check all markdown headers, frontmatter, and file naming conventions for consistency.
-- [ ] T025 Make sure each module and chapter folder has proper placeholders as defined.
-- [ ] T026 Run a local Docusaurus build (`npm run build`) and verify no errors.
-- [ ] T027 Run quickstart.md validation (ensure instructions are still accurate).
+- [X] T021 Verify the entire folder structure under `/docs/` matches the layout plan.
+- [X] T022 Confirm chapter → section → subsection hierarchy is consistent across all modules.
+- [X] T023 Ensure Docusaurus sidebar recognizes all modules and chapters correctly.
+- [X] T024 Check all markdown headers, frontmatter, and file naming conventions for consistency.
+- [X] T025 Make sure each module and chapter folder has proper placeholders as defined.
+- [X] T026 Run a local Docusaurus build (`npm run build`) and verify no errors.
+- [X] T027 Run quickstart.md validation (ensure instructions are still accurate).
 
 ---
 
