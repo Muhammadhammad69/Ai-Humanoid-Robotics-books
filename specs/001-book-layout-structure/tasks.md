@@ -35,10 +35,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create the main `/docs` directory.
-- [ ] T006 Create the `/docs/modules` directory.
-- [ ] T007 [P] Create module folders: `/docs/modules/module-1`, `/docs/modules/module-2`, `/docs/modules/module-3`, `/docs/modules/module-4`.
-- [ ] T008 [P] Add placeholder `_category_.json` file in each module folder to define module title.
+- [X] T005 Create the main `/docs` directory.
+- [X] T006 Create the `/docs/modules` directory.
+- [X] T007 [P] Create module folders: `/docs/modules/module-1`, `/docs/modules/module-2`, `/docs/modules/module-3`, `/docs/modules/module-4`.
+- [X] T008 [P] Add placeholder `_category_.json` file in each module folder to define module title.
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
