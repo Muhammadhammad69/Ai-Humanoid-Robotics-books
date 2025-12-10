@@ -1,0 +1,299 @@
+# VLA System API Contracts
+
+## Overview
+This document defines the API contracts for the Vision-Language-Action (VLA) system, specifying the interfaces between different components and external systems.
+
+## 1. Voice Processing API
+
+### 1.1 Transcription Service
+```
+POST /api/v1/transcribe
+```
+
+**Description**: Transcribe audio data to text using Whisper
+
+**Request**:
+- Content-Type: `audio/wav` or `audio/mp3`
+- Body: Raw audio data
+
+**Response**:
+```
+{
+  "transcript": "string",
+  "confidence": "float (0.0-1.0)",
+  "language": "string",
+  "processing_time": "float (seconds)"
+}
+```
+
+**Errors**:
+- 400: Invalid audio format
+- 422: Audio too short/long
+- 500: Processing error
+
+### 1.2 Intent Classification
+```
+POST /api/v1/intent
+```
+
+**Description**: Classify intent from transcribed text
+
+**Request**:
+```json
+{
+  "text": "string",
+  "context": "object (optional)"
+}
+```
+
+**Response**:
+```json
+{
+  "intent": "string",
+  "entities": [
+    {
+      "type": "string",
+      "value": "string",
+      "confidence": "float"
+    }
+  ],
+  "confidence": "float (0.0-1.0)"
+}
+```
+
+## 2. Cognitive Planning API
+
+### 2.1 Plan Generation
+```
+POST /api/v1/plan
+```
+
+**Description**: Generate executable plan from command and environment state
+
+**Request**:
+```json
+{
+  "command": {
+    "text": "string",
+    "intent": "string",
+    "entities": "array"
+  },
+  "environment_state": {
+    "objects": "array",
+    "robot_pose": "object",
+    "spatial_map": "object"
+  }
+}
+```
+
+**Response**:
+```json
+{
+  "plan_id": "string",
+  "tasks": [
+    {
+      "action": "string",
+      "parameters": "object",
+      "dependencies": "array",
+      "estimated_duration": "integer"
+    }
+  ],
+  "confidence": "float (0.0-1.0)",
+  "alternatives": "array (optional)"
+}
+```
+
+### 2.2 Plan Execution
+```
+POST /api/v1/plan/{plan_id}/execute
+```
+
+**Description**: Execute a generated plan
+
+**Response**:
+```json
+{
+  "execution_id": "string",
+  "status": "string (PENDING, EXECUTING, COMPLETED, FAILED)",
+  "estimated_completion": "integer (seconds)"
+}
+```
+
+## 3. Vision Processing API
+
+### 3.1 Object Detection
+```
+POST /api/v1/vision/detect
+```
+
+**Description**: Detect objects in an image
+
+**Request**:
+- Content-Type: `image/jpeg` or `image/png`
+- Body: Image data
+
+**Response**:
+```json
+{
+  "detections": [
+    {
+      "class": "string",
+      "confidence": "float (0.0-1.0)",
+      "bbox": {
+        "x": "float",
+        "y": "float",
+        "width": "float",
+        "height": "float"
+      },
+      "position_3d": {
+        "x": "float",
+        "y": "float",
+        "z": "float"
+      }
+    }
+  ],
+  "processing_time": "float (seconds)"
+}
+```
+
+### 3.2 Scene Understanding
+```
+POST /api/v1/vision/scene
+```
+
+**Description**: Analyze scene and understand spatial relationships
+
+**Request**:
+- Content-Type: `image/jpeg` or `image/png`
+- Body: Image data
+
+**Response**:
+```json
+{
+  "objects": "array (same format as detection)",
+  "spatial_relationships": [
+    {
+      "subject": "string (object_id)",
+      "relation": "string (on, near, left_of, etc.)",
+      "object": "string (object_id)"
+    }
+  ],
+  "scene_description": "string"
+}
+```
+
+## 4. ROS 2 Integration API
+
+### 4.1 Action Execution
+```
+POST /api/v1/ros2/action
+```
+
+**Description**: Execute ROS 2 action with parameters
+
+**Request**:
+```json
+{
+  "action_type": "string (navigate_to, manipulate_object, etc.)",
+  "parameters": "object",
+  "timeout": "integer (seconds, optional)"
+}
+```
+
+**Response**:
+```json
+{
+  "action_id": "string",
+  "status": "string (PENDING, EXECUTING, COMPLETED, FAILED)",
+  "result": "object (action-specific result)"
+}
+```
+
+### 4.2 System State
+```
+GET /api/v1/state
+```
+
+**Description**: Get current system state
+
+**Response**:
+```json
+{
+  "voice_processor": {
+    "status": "string",
+    "last_command": "string (optional)",
+    "processing_latency": "float"
+  },
+  "cognitive_planner": {
+    "status": "string",
+    "active_plans": "integer",
+    "planning_latency": "float"
+  },
+  "vision_system": {
+    "status": "string",
+    "last_detection": "object (optional)",
+    "processing_latency": "float"
+  },
+  "robot_state": {
+    "position": "object",
+    "battery_level": "float (0.0-1.0)",
+    "active_actions": "integer"
+  },
+  "safety_monitor": {
+    "status": "string (SAFE, WARNING, VIOLATION)",
+    "last_check": "string (ISO timestamp)"
+  }
+}
+```
+
+## 5. Error Handling
+
+### 5.1 Standard Error Format
+All error responses follow this format:
+```json
+{
+  "error": {
+    "code": "string",
+    "message": "string",
+    "details": "object (optional)",
+    "timestamp": "string (ISO timestamp)"
+  }
+}
+```
+
+### 5.2 Common Error Codes
+- `VOICE_PROCESSING_ERROR`: Error in speech recognition
+- `PLANNING_ERROR`: Error in task decomposition
+- `VISION_ERROR`: Error in object detection or scene understanding
+- `EXECUTION_ERROR`: Error in action execution
+- `SAFETY_VIOLATION`: Action would violate safety constraints
+- `RESOURCE_UNAVAILABLE`: Required resource not available
+- `TIMEOUT`: Operation timed out
+
+## 6. Security and Authentication
+
+### 6.1 API Authentication
+All API endpoints require authentication using Bearer tokens:
+```
+Authorization: Bearer <token>
+```
+
+### 6.2 Rate Limiting
+- Voice processing: 10 requests per minute
+- Vision processing: 5 requests per second
+- Planning: 2 requests per second
+- Action execution: 1 request per second
+
+## 7. Performance Requirements
+
+### 7.1 Latency Requirements
+- Voice transcription: <1 second
+- Intent classification: <0.5 seconds
+- Plan generation: <2 seconds
+- Vision processing: <0.5 seconds
+- Action execution: <0.1 seconds for simple actions
+
+### 7.2 Availability Requirements
+- System uptime: 99.5%
+- Component availability: 99% when active
+- Failover time: <5 seconds

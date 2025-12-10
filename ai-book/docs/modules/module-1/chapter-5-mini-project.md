@@ -1,214 +1,515 @@
----
-id: chapter-5-mini-project
-title: Hands-On Projects & Exercises
-sidebar_position: 5
----
-
-# Hands-On Projects & Exercises
+# Chapter 5: Mini Project - Complete ROS 2 System
 
 ## Overview
-This chapter provides practical, hands-on projects and exercises that consolidate the concepts learned in previous chapters. By engaging with these mini-projects, you will gain practical experience in implementing ROS 2 nodes, using `rclpy` for Python-based control, and working with URDF models for humanoid robots. These exercises are designed to be challenging yet achievable, providing a tangible sense of accomplishment and preparing you for more complex robotic endeavors.
+This chapter brings together all the concepts learned in Module 1 by implementing a complete ROS 2 system for a simple mobile robot. You'll create a functional robot application that includes sensor processing, control systems, and navigation capabilities. This hands-on project demonstrates how to integrate topics, services, actions, parameters, and URDF models into a cohesive robotic system that can perform meaningful tasks.
+
+The project involves building a robot that can navigate to specified goals while avoiding obstacles using sensor data. This requires implementing multiple nodes that communicate through various ROS 2 patterns, creating a realistic simulation environment, and integrating all components into a working system.
 
 ## Learning Objectives
-- Apply ROS 2 concepts (nodes, topics, services) in practical scenarios.
-- Implement Python-based control logic for a humanoid robot using `rclpy`.
-- Integrate URDF models with ROS 2 for simulation and control.
-- Develop basic teleoperation capabilities for a robotic system.
-- Reinforce understanding of ROS 2 communication patterns through practical projects.
+- Integrate all Module 1 concepts into a complete robotic system
+- Design and implement multiple interconnected ROS 2 nodes
+- Create a complete robot model with URDF and simulation integration
+- Implement sensor processing and control algorithms in Python
+- Use launch files to start complex multi-node systems
+- Debug and validate a complete ROS 2 application
 
 ## Key Concepts
-### Teleoperation
-Teleoperation refers to operating a robot remotely. In ROS 2, this typically involves a teleoperation node (e.g., receiving keyboard or joystick commands) publishing commands to another robot control node (e.g., joint controller). This is a fundamental concept for controlling humanoid robots, allowing human operators to guide their movements.
 
-### Joint State Publishing
-For robots to be visualized and controlled effectively in ROS 2, their current joint positions (joint states) need to be published to a specific topic, typically `/joint_states`. This information is consumed by visualization tools like RViz and by robot state publishers.
+### System Integration
+Successfully combining multiple ROS 2 nodes with different communication patterns to achieve a complex task requires careful design and proper interfaces between components.
 
-### Mini-Project Design
-Effective mini-projects break down complex tasks into manageable steps, allowing learners to build upon their knowledge incrementally. Each project should have clear goals, provide necessary code examples, and include checkpoints for validation.
+### Robot Behavior Architecture
+The project demonstrates a layered architecture with perception (sensor processing), planning (navigation), and control (motor commands) components that work together to achieve robot autonomy.
+
+### Simulation Integration
+The project includes integration with Gazebo simulation and RViz visualization to create a complete development and testing environment.
+
+### Multi-Node Coordination
+Proper coordination between multiple nodes requires understanding of message timing, state management, and error handling across the distributed system.
 
 ## Technical Deep Dive
 
-### Teleoperating the 2-Link Humanoid Arm
-We will extend our 2-link humanoid arm model from Chapter 4 and implement a simple teleoperation script using `rclpy`. This script will read keyboard inputs and publish commands to control the shoulder and elbow joints of our robot.
+### Project Architecture
 
-**System Architecture for Teleoperation (Text Description)**:
+The complete system consists of several interconnected nodes:
+
+**Sensor Processing Node**: Processes raw sensor data (LIDAR, IMU, odometry) and publishes processed information for other nodes to use.
+
+**Navigation Node**: Implements path planning and obstacle avoidance algorithms, publishing velocity commands to move the robot toward goals.
+
+**Controller Node**: Interfaces with the robot's hardware (or simulation) to execute motor commands and manage robot state.
+
+**Visualization Node**: Publishes markers and other information for display in RViz.
+
+### Communication Pattern Integration
+
+The system uses multiple communication patterns:
+- **Topics**: Sensor data, odometry, and velocity commands using appropriate QoS settings
+- **Services**: For dynamic reconfiguration and system status queries
+- **Actions**: For goal-oriented navigation tasks with feedback
+
+### System Architecture (Text Diagram)
 ```
-+-----------------+       +-----------------+       +-----------------+
-|   Keyboard Input| ----> | Teleop Node (Py)| ----> | Joint Command   |
-| (User)          |       | (Publisher)     |       | Topic           |
-+-----------------+       +-----------------+       +-----------------+
-                                    |                         ^
-                                    v                         |
-                                +-----------------+       +-----------------+
-                                | Joint Commander | <---- | Joint States    |
-                                | Node (Sub/Pub)  |       | Topic (Sensor)  |
-                                +-----------------+       +-----------------+
-                                          |
-                                          v
-                                +-----------------+
-                                |  2-Link Humanoid|
-                                |  Arm (URDF)     |
-                                +-----------------+
++-------------------+    +-------------------+    +-------------------+
+|   Sensor Node     |    |  Navigation Node  |    |  Controller Node  |
+|                   |    |                   |    |                   |
+| - Process LIDAR   |    | - Plan paths      |    | - Execute motor   |
+| - Process odometry|    | - Avoid obstacles |    |   commands        |
+| - Publish sensor  |    | - Publish cmd_vel |    | - Manage state    |
+|   data            |    | - Action server   |    | - Hardware I/F    |
++--------+----------+    +--------+----------+    +----------+--------+
+         |                      |                          |
+         | sensor_msgs          | geometry_msgs            | geometry_msgs
+         | /scan, /odom         | /cmd_vel                 | /cmd_vel
+         v                      v                          v
++--------+----------------------+--------------------------+--------+
+|                     ROS 2 Middleware Layer                      |
+|                    (DDS Implementation)                         |
++--------+----------------------+--------------------------+--------+
+         |                      |                          |
+         |                      |                          |
+         v                      v                          v
++-------------------+    +-------------------+    +-------------------+
+|   Visualization   |    |   Gazebo Sim      |    |      RViz         |
+|      Node         |    |                   |    |                   |
+| - Publish markers |    | - Robot physics   |    | - Display robot   |
+| - Debug info      |    | - Sensor models   |    | - Show paths      |
+| - TF transforms   |    | - Environment     |    | - Sensor data     |
++-------------------+    +-------------------+    +-------------------+
 ```
-The Teleop Node translates keyboard presses into joint commands, which are then published to a topic. A Joint Commander Node subscribes to these commands and updates the simulated (or real) robot's joints.
 
 ## Code Examples
 
-### Python Script for Simple Teleoperation (using `rclpy`)
-This example demonstrates a basic teleoperation node that reads keyboard input to control a simulated 2-link arm. You would need to have `pynput` or a similar library installed (e.g., `pip install pynput`) and handle non-blocking input appropriately in a real ROS 2 setup. For simplicity, this is a conceptual example for a ROS 2 node that would interact with a joint command publisher.
+### Complete Robot URDF Model
+```xml
+<?xml version="1.0"?>
+<robot name="project_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-Let's assume we have `my_robot_interfaces/msg/JointCommand.msg` as defined in Chapter 3.
+  <!-- Base link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://project_robot/meshes/base.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.15" radius="0.25"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10.0"/>
+      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+    </inertial>
+  </link>
 
-```python
-import rclpy
-from rclpy.node import Node
-from my_robot_interfaces.msg import JointCommand # Import your custom message
-import termios, sys, os # For non-blocking keyboard input
+  <!-- LIDAR Mount -->
+  <joint name="base_to_laser" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_link"/>
+    <origin xyz="0.2 0 0.1" rpy="0 0 0"/>
+  </joint>
 
-# Global variable to store key press
-KEY_PRESS = ''
+  <link name="laser_link">
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
 
-# Function to get a single character input without waiting for Enter
-def getch():
-    fd = sys.stdin.fileno()
-    old_term = termios.tcgetattr(fd)
-    new_term = termios.tcgetattr(fd)
-    new_term[3] = (new_term[3] & ~termios.ICANON & ~termios.ECHO)
-    termios.tcsetattr(fd, termios.TCSAFLUSH, new_term)
-    try:
-        return sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSAFLUSH, old_term)
+  <!-- Wheels -->
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_left_link"/>
+    <origin xyz="0 0.2 -0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
 
-class TeleopNode(Node):
+  <link name="wheel_left_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.02"/>
+    </inertial>
+  </link>
 
-    def __init__(self):
-        super().__init__('teleop_node')
-        self.publisher_ = self.create_publisher(JointCommand, 'joint_commands', 10)
-        self.joint_positions = {'shoulder_joint': 0.0, 'elbow_joint': 0.0}
-        self.speed = 0.1 # Radians per key press
-        self.create_timer(0.1, self.timer_callback) # Check for input periodically
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_right_link"/>
+    <origin xyz="0 -0.2 -0.05" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
 
-        self.get_logger().info('Teleop Node Started. Use "qweasd" to control joints. Press "space" to exit.')
-        self.get_logger().info('q/a: Shoulder Joint | w/s: Elbow Joint')
+  <link name="wheel_right_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.02"/>
+    </inertial>
+  </link>
 
-    def timer_callback(self):
-        # This part would typically be handled by a blocking input listener in a separate thread
-        # For conceptual example, assume KEY_PRESS is updated by an external input mechanism
-        global KEY_PRESS
+  <!-- Gazebo integration -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
-        try:
-            char = getch() # Attempt to get input
-            KEY_PRESS = char
-        except:
-            pass # No input, continue
+  <gazebo reference="wheel_left_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
 
-        if KEY_PRESS == 'q': # Shoulder up
-            self.joint_positions['shoulder_joint'] += self.speed
-            self._publish_command('shoulder_joint', self.joint_positions['shoulder_joint'])
-        elif KEY_PRESS == 'a': # Shoulder down
-            self.joint_positions['shoulder_joint'] -= self.speed
-            self._publish_command('shoulder_joint', self.joint_positions['shoulder_joint'])
-        elif KEY_PRESS == 'w': # Elbow up
-            self.joint_positions['elbow_joint'] += self.speed
-            self._publish_command('elbow_joint', self.joint_positions['elbow_joint'])
-        elif KEY_PRESS == 's': # Elbow down
-            self.joint_positions['elbow_joint'] -= self.speed
-            self._publish_command('elbow_joint', self.joint_positions['elbow_joint'])
-        elif KEY_PRESS == ' ':
-            self.get_logger().info('Exiting teleop node.')
-            raise SystemExit # Exit condition
+  <gazebo reference="wheel_right_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
 
-        KEY_PRESS = '' # Reset key press
+  <!-- Gazebo plugins -->
+  <gazebo>
+    <plugin name="differential_drive" filename="libgazebo_ros_diff_drive.so">
+      <left_joint>wheel_left_joint</left_joint>
+      <right_joint>wheel_right_joint</right_joint>
+      <wheel_separation>0.4</wheel_separation>
+      <wheel_diameter>0.2</wheel_diameter>
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+  </gazebo>
 
-    def _publish_command(self, joint_name, position):
-        msg = JointCommand()
-        msg.joint_name = joint_name
-        msg.position = position
-        msg.velocity = 0.5 # Example velocity
-        self.publisher_.publish(msg)
-        self.get_logger().info(f'Commanding {joint_name} to {position:.2f}')
+  <gazebo reference="laser_link">
+    <sensor type="ray" name="head_hokuyo_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_sensor" filename="libgazebo_ros_laser.so">
+        <topic_name>scan</topic_name>
+        <frame_name>laser_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
 
-def main(args=None):
-    rclpy.init(args=args)
-    teleop_node = TeleopNode()
-    try:
-        rclpy.spin(teleop_node)
-    except SystemExit: # Catch the exit
-        pass
-    finally:
-        teleop_node.destroy_node()
-        rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
+</robot>
 ```
-*Save this as `simple_teleop.py`*
 
-### Python Script for Publishing Joint States
-A node that publishes the current state of the robot's joints. This is crucial for visualization in RViz.
-
+### Navigation Node Implementation
 ```python
+#!/usr/bin/env python3
+"""
+Navigation node for the complete ROS 2 system project
+Implements obstacle avoidance and goal navigation
+"""
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import JointState
-from std_msgs.msg import Header
+from rclpy.action import ActionServer
+from rclpy.qos import QoSProfile, ReliabilityPolicy
+from geometry_msgs.msg import Twist, Point
+from sensor_msgs.msg import LaserScan
+from nav_msgs.msg import Odometry
+from example_interfaces.action import NavigateToPose
+import numpy as np
 import math
 
-class JointStatePublisher(Node):
 
+class NavigationNode(Node):
     def __init__(self):
-        super().__init__('joint_state_publisher')
-        self.publisher_ = self.create_publisher(JointState, 'joint_states', 10)
-        self.timer = self.create_timer(0.05, self.timer_callback) # Publish at 20 Hz
+        super().__init__('navigation_node')
 
-        # Initial joint positions
-        self.shoulder_pos = 0.0
-        self.elbow_pos = 0.0
-        self.time = 0.0
+        # Navigation state
+        self.current_pose = Point()
+        self.target_pose = Point()
+        self.is_navigating = False
+        self.min_distance = 0.5  # minimum safe distance to obstacles
 
-    def timer_callback(self):
-        msg = JointState()
-        msg.header = Header()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.name = ['shoulder_joint', 'elbow_joint'] # Names from our URDF
-        
-        # Simulate some movement (e.g., oscillating)
-        self.shoulder_pos = math.sin(self.time * 0.5) * 0.5 # oscillates between -0.5 and 0.5 rad
-        self.elbow_pos = math.cos(self.time * 0.7) * 0.7 + 0.7 # oscillates between 0 and 1.4 rad
-        
-        msg.position = [self.shoulder_pos, self.elbow_pos]
-        msg.velocity = [] # Can be empty if not simulating velocities
-        msg.effort = []   # Can be empty if not simulating efforts
+        # Publishers and subscribers
+        self.cmd_vel_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.laser_subscription = self.create_subscription(
+            LaserScan, 'scan', self.laser_callback,
+            QoSProfile(depth=10, reliability=ReliabilityPolicy.RELIABLE))
+        self.odom_subscription = self.create_subscription(
+            Odometry, 'odom', self.odom_callback, 10)
 
-        self.publisher_.publish(msg)
-        self.get_logger().info(f'Publishing Joint States: Shoulder={self.shoulder_pos:.2f}, Elbow={self.elbow_pos:.2f}')
-        self.time += 0.05
+        # Action server for navigation
+        self.navigation_action_server = ActionServer(
+            self,
+            NavigateToPose,
+            'navigate_to_pose',
+            self.execute_navigation)
+
+        # Timer for navigation control loop
+        self.nav_timer = self.create_timer(0.1, self.navigation_control)
+
+        self.get_logger().info('Navigation node initialized')
+
+    def odom_callback(self, msg):
+        """Update current robot pose from odometry"""
+        self.current_pose.x = msg.pose.pose.position.x
+        self.current_pose.y = msg.pose.pose.position.y
+        # Extract yaw from quaternion (simplified)
+        # In a real implementation, you'd properly convert quaternion to euler
+
+    def laser_callback(self, msg):
+        """Process laser scan data for obstacle detection"""
+        # Filter out invalid ranges
+        valid_ranges = [r for r in msg.ranges if msg.range_min <= r <= msg.range_max]
+
+        if valid_ranges:
+            self.min_distance = min(valid_ranges)
+
+    def calculate_navigation_command(self):
+        """Calculate velocity command based on target and obstacles"""
+        cmd = Twist()
+
+        if not self.is_navigating:
+            return cmd
+
+        # Calculate distance to target
+        dist_to_target = math.sqrt(
+            (self.target_pose.x - self.current_pose.x)**2 +
+            (self.target_pose.y - self.current_pose.y)**2
+        )
+
+        # Check if close enough to target
+        if dist_to_target < 0.2:
+            self.is_navigating = False
+            self.get_logger().info('Reached target position')
+            return cmd
+
+        # Calculate angle to target
+        angle_to_target = math.atan2(
+            self.target_pose.y - self.current_pose.y,
+            self.target_pose.x - self.current_pose.x
+        )
+
+        # Simple obstacle avoidance
+        if self.min_distance < 0.8:
+            # Stop and turn to avoid obstacle
+            cmd.linear.x = 0.0
+            cmd.angular.z = 0.5  # Turn right
+        else:
+            # Move toward target
+            cmd.linear.x = min(0.5, dist_to_target)  # Scale speed with distance
+            cmd.angular.z = angle_to_target * 1.0  # Proportional to angle error
+
+        return cmd
+
+    def navigation_control(self):
+        """Main navigation control loop"""
+        if not self.is_navigating:
+            return
+
+        cmd = self.calculate_navigation_command()
+        self.cmd_vel_publisher.publish(cmd)
+
+    def execute_navigation(self, goal_handle):
+        """Execute navigation action"""
+        self.get_logger().info(f'Executing navigation to: ({goal_handle.request.pose.position.x}, {goal_handle.request.pose.position.y})')
+
+        # Set target pose
+        self.target_pose = goal_handle.request.pose.position
+        self.is_navigating = True
+
+        # Execute navigation until target reached
+        while self.is_navigating and not goal_handle.is_cancel_requested:
+            # Publish feedback
+            feedback_msg = NavigateToPose.Feedback()
+            feedback_msg.current_pose.position = self.current_pose
+            goal_handle.publish_feedback(feedback_msg)
+
+            # Small delay to allow other callbacks to process
+            self.get_clock().sleep_for(rclpy.duration.Duration(seconds=0.1))
+
+        # Check if cancelled
+        if goal_handle.is_cancel_requested:
+            goal_handle.canceled()
+            self.is_navigating = False
+            result = NavigateToPose.Result()
+            result.error_code = 1  # Cancelled
+            return result
+
+        # Navigation completed successfully
+        goal_handle.succeed()
+        self.is_navigating = False
+        result = NavigateToPose.Result()
+        result.error_code = 0  # Success
+        return result
+
 
 def main(args=None):
     rclpy.init(args=args)
-    joint_state_publisher = JointStatePublisher()
-    rclpy.spin(joint_state_publisher)
-    joint_state_publisher.destroy_node()
-    rclpy.shutdown()
+    node = NavigationNode()
+
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info('Navigation node stopped by user')
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
 ```
-*Save this as `joint_state_publisher.py`*
+
+### Launch File for Complete System
+```python
+# project_launch.py
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+
+
+def generate_launch_description():
+    # Launch configuration variables
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+
+    # Nodes for the complete system
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time,
+            'publish_frequency': 50.0
+        }],
+        arguments=[PathJoinSubstitution([
+            FindPackageShare('project_robot'),
+            'urdf',
+            'project_robot.urdf'
+        ])]
+    )
+
+    navigation_node = Node(
+        package='project_robot',
+        executable='navigation_node',
+        name='navigation_node',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }]
+    )
+
+    # RViz node
+    rviz_config = PathJoinSubstitution([
+        FindPackageShare('project_robot'),
+        'rviz',
+        'project_robot.rviz'
+    ])
+
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', rviz_config],
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        output='screen'
+    )
+
+    # Include Gazebo launch
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            PathJoinSubstitution([
+                FindPackageShare('gazebo_ros'),
+                'launch',
+                'gazebo.launch.py'
+            ])
+        ]),
+        launch_arguments={
+            'world': PathJoinSubstitution([
+                FindPackageShare('project_robot'),
+                'worlds',
+                'simple_room.world'
+            ])
+        }.items()
+    )
+
+    # Spawn robot in Gazebo
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-topic', 'robot_description',
+            '-entity', 'project_robot',
+            '-x', '0', '-y', '0', '-z', '0.1'
+        ],
+        output='screen'
+    )
+
+    return LaunchDescription([
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='true',
+            description='Use simulation (Gazebo) clock if true'
+        ),
+        gazebo,
+        spawn_entity,
+        robot_state_publisher,
+        navigation_node,
+        rviz_node
+    ])
+```
 
 ## Common Pitfalls
--   **Blocking Input**: Teleoperation nodes can become unresponsive if keyboard input is handled in a blocking manner.
--   **Coordinate Frame Issues**: Incorrectly defining coordinate frames in URDF or when publishing transforms can lead to visualization errors in RViz.
--   **Missing Robot State Publisher**: For visualization in RViz, you typically need a `robot_state_publisher` node running which reads the URDF and `joint_states` and publishes the robot's full kinematic tree.
+- **Timing Issues**: Different nodes running at different rates can cause coordination problems. Use appropriate QoS settings and consider message timestamps.
+- **Coordinate Frame Management**: Improper TF transforms can cause navigation errors. Ensure all frames are properly defined and connected.
+- **Resource Contention**: Multiple nodes accessing shared resources without proper synchronization can cause race conditions.
+- **Parameter Tuning**: Navigation parameters (speed, turning rate, obstacle detection thresholds) need careful tuning for stable operation.
+- **Error Handling**: Not properly handling errors in one node can cause the entire system to fail.
 
 ## Checkpoints / Mini-Exercises
-1.  Implement a more robust teleoperation node that uses `curses` or `pynput` for non-blocking keyboard input and provides more granular control over joint speeds.
-2.  Integrate the `simple_teleop.py` with a simulated robot (e.g., using `ros2_control` and Gazebo if set up) to control its arm in real-time.
-3.  Visualize the `joint_state_publisher.py` output in RViz by setting up a basic RViz configuration for your 2-link arm.
+1. Implement the complete robot URDF and test it in RViz
+2. Create the navigation node and test obstacle avoidance in simulation
+3. Add a simple path planning algorithm to the navigation node
+4. Create a launch file that starts the complete system with Gazebo and RViz
+5. Test the complete system by sending navigation goals and observing robot behavior
+6. Add a simple UI or service to set navigation goals dynamically
 
 ## References
--   [ROS 2 Documentation - Tutorials (Create a teleop package)](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Python-Package-And-Node.html) (Conceptual guide for package creation)
--   [ROS 2 Documentation - Tutorials (Robot State Publisher)](https://docs.ros.org/en/humble/Tutorials/Intermediate/URDF/Using-URDF-With-Robot-State-Publisher.html)
--   [RViz User Guide](http://wiki.ros.org/rviz/UserGuide)
--   [pynput library documentation](https://pynput.readthedocs.io/en/latest/)
+- [ROS 2 Navigation Stack](https://navigation.ros.org/)
+- [Robot State Publisher](http://wiki.ros.org/robot_state_publisher)
+- [Gazebo ROS Integration](http://gazebosim.org/tutorials/?tut=ros2_overview)
+- [ROS 2 Launch System](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)

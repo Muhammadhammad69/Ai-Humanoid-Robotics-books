@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Module 4 VLA Specification\" --stage spec --feature \"vla-module\" --json)",
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Module 4 VLA Specification\" --stage spec --feature \"004-vla-module\" --json)",
+      "SlashCommand(/sp.plan)",
+      "Bash(.specify/scripts/bash/setup-plan.sh --json)",
+      "SlashCommand(/sp.tasks)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json)",
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Module 4 VLA Tasks Generation\" --stage tasks --feature \"004-vla-module\" --json)",
+      "SlashCommand(/sp.implement)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)"
+    ]
+  }
+}
