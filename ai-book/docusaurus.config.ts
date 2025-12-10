@@ -10,15 +10,15 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://GIAIC_Quatar_04.github.io',
+  url: 'https://muhammadhammad69.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/Ai-Humanoid-Robotics-books-4/',
+  baseUrl: '/Ai-Humanoid-Robotics-books/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'GIAIC_Quatar_04', // Usually your GitHub org/user name.
-  projectName: 'Ai-Humanoid-Robotics-books-4', // Usually your repo name.
+  organizationName: 'Muhammadhammad69', // Usually your GitHub org/user name.
+  projectName: 'Ai-Humanoid-Robotics-books', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
