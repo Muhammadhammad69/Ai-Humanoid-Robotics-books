@@ -16,6 +16,11 @@ const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorialSidebar: [
     {
+      type: "doc",
+      label: "Introduction",
+      id: "intro"
+    },
+    {
       type: 'category',
       label: 'Module 1 — The Robotic Nervous System (ROS 2)',
       link: { type: 'doc', id: 'modules/module-1/index' },
@@ -68,7 +73,29 @@ const sidebars: SidebarsConfig = {
       ],
     }
   ],
-
+  hardwareSidebar: [
+    
+    {
+      type: "doc",
+      label: "Introduction",
+      id: "hardware/intro"
+    },
+    {
+      type: "doc",
+      label: "Digital Twin Workstation Requirements",
+      id: "hardware/workstation"
+    },
+    {
+      type: "doc",
+      label: "Physical AI Edge Kit",
+      id: "hardware/edge-kit"
+    },
+    {
+      type: "doc",
+      label: "Robot Platform Options",
+      id: "hardware/robot-platform"
+    }
+  ]
   // But you can create a sidebar manually
   /*
   tutorialSidebar: [

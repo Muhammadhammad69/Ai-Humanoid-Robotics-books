@@ -94,9 +94,18 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Introduction',
               to: '/docs/intro',
             },
+            {
+              label: 'Explore Modules',
+              to: '/docs/modules/module-1',
+            },
+            {
+              label: 'Explore Hardware Platforms',
+              to: '/docs/hardware/intro',
+            }
+
           ],
         },
         {
