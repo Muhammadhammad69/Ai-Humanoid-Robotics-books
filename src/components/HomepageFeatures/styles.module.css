@@ -1,11 +1,186 @@
-.features {
+/* Module Card Styles */
+.moduleCard {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  height: 100%;
+  border: 1px solid #e0e0e0;
   display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  flex-direction: column;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.moduleCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(57, 255, 20, 0.3), 0 0 0 2px #39FF14;
+  border-color: #39FF14;
+}
+
+.moduleCardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.moduleIcon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.moduleTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2E2E2E;
+}
+
+.moduleDescription {
+  margin: 0.5rem 0 1.5rem;
+  color: #555;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.moduleLink {
+  display: inline-block;
+  color: #1A73E8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+}
+
+.moduleLink:hover {
+  color: #39FF14;
+  text-decoration: underline;
+}
+
+/* CTA Button Styles */
+.ctaButton {
+  display: inline-block;
+  background-color: #39FF14; /* Neon Green */
+  color: #0A0A0A;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+}
+
+.ctaButton:hover {
+  background-color: #2ed712;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+  transform: scale(1.05);
+}
+
+/* Hardware Item Styles */
+.hardwareItem {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.hardwareItem:hover {
+  transform: translateY(-5px);
+}
+
+.hardwareIcon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hardwareName {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.hardwareDescription {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.hardwareLink {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #1A73E8;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.hardwareLink:hover {
+  color: #8B5CF6;
+  text-decoration: underline;
+}
+
+/* Features Section Styles */
+.features {
+  padding: 3rem 0;
+  background-color: #F5F7FA;
+}
+
+/* Section Title */
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  color: #2E2E2E;
+  font-weight: bold;
+}
+
+/* Responsive Grid Layout */
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .moduleGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .moduleCard {
+    margin-bottom: 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* Add subtle neon glow shadow effects to module cards */
+.moduleCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
+  transition: box-shadow 0.3s ease;
+  pointer-events: none;
+}
+
+.moduleCard:hover::before {
+  box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.2);
 }

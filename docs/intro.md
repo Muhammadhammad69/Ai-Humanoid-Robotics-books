@@ -1,47 +1,66 @@
+# Physical AI & Humanoid Robotics – Course Introduction
+
+Welcome to the **Physical AI & Humanoid Robotics** capstone quarter. This course bridges the gap between **digital intelligence** and the **physical world**, enabling students to build AI-driven humanoid systems capable of perception, reasoning, and action.
+
+## Course Focus & Theme
+**Physical AI** explores intelligent agents that operate in real environments, understand physics, and perform human-like interactions. Students apply their AI fundamentals to control humanoid robots using modern robotic frameworks such as **ROS 2**, **Gazebo**, **Unity**, and **NVIDIA Isaac**.
+
+## Goal
+To train students in designing, simulating, and deploying autonomous humanoid robots by integrating AI models with real-time robotic control systems.
+
+## Quarter Overview
+This quarter introduces the full ecosystem of embodied AI:
+- Creating digital twins  
+- Designing robot nervous systems  
+- Generating advanced perception pipelines  
+- Connecting LLM-based reasoning to robotic action  
+
+You will learn to build humanoid behaviors in both **high-fidelity simulations** and **real-world environments**.
+
 ---
-sidebar_position: 1
+
+# 📘 Module Introductions
+
+## **Module 1: The Robotic Nervous System (ROS 2)**
+This module builds the foundational communication and control layer for a humanoid robot.
+
+- Understanding how robots "think" using **ROS 2 nodes, topics, services, and actions**  
+- Building communication between Python AI agents and ROS controllers using **rclpy**  
+- Learning **URDF** to define a humanoid’s links, joints, sensors, and physical structure  
+- Executing movement commands, sensor reading, and basic robot behaviors  
+
 ---
 
-# Tutorial Intro
+## **Module 2: The Digital Twin (Gazebo & Unity)**
+This module focuses on creating a virtual environment where your humanoid robot can safely learn and interact.
 
-Let's discover **Docusaurus in less than 5 minutes**.
+- Building physically accurate simulations with **Gazebo**  
+- Understanding gravity, collisions, joint constraints, and physics engines  
+- Integrating Unity for **high-fidelity rendering** and interactive scenes  
+- Simulating robot sensors: **LiDAR, depth cameras, IMUs, RGB-D vision**  
 
-## Getting Started
+---
 
-Get started by **creating a new site**.
+## **Module 3: The AI-Robot Brain (NVIDIA Isaac™)**
+This module introduces GPU-accelerated perception and navigation for advanced humanoid capabilities.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- Using **NVIDIA Isaac Sim** for photorealistic training and synthetic data generation  
+- Implementing **Isaac ROS** for high-speed, hardware-accelerated perception  
+- Using **VSLAM** for real-time localization and mapping  
+- Designing bipedal path planning using **Nav2**  
 
-### What you'll need
+---
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## **Module 4: Vision–Language–Action (VLA)**
+This module fuses LLMs, computer vision, and robotics to achieve natural human–robot interaction.
 
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+- Voice commands using **OpenAI Whisper**  
+- Converting natural language tasks (“Clean the room”) into ROS 2 action sequences  
+- Using LLMs for reasoning, decomposition, and robotic planning  
+- **Capstone Project:**  
+  Build **The Autonomous Humanoid** — a robot that:  
+  - Listens to a voice command  
+  - Plans navigation  
+  - Identifies objects  
+  - Avoids obstacles  
+  - Manipulates the target object using vision-guided actions  

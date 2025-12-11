@@ -1,71 +1,132 @@
-import type {ReactNode} from 'react';
+import React from 'react';
 import clsx from 'clsx';
-import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
-type FeatureItem = {
+// Define TypeScript interfaces for our data structures
+interface ModuleCardProps {
+  id: string;
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: ReactNode;
-};
-
-const FeatureList: FeatureItem[] = [
-  {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
-  },
-  {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
-  },
-];
-
-function Feature({title, Svg, description}: FeatureItem) {
-  return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
-  );
+  icon: string;
+  description: string;
+  link: string;
+  priority: number;
 }
 
-export default function HomepageFeatures(): ReactNode {
+interface CTAButtonProps {
+  text: string;
+  link: string;
+  style?: any;
+  trackingId?: string;
+}
+
+interface HardwareItemProps {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+  detailsLink: string;
+}
+
+// Module Card Component
+const ModuleCard: React.FC<ModuleCardProps> = ({ id, title, icon, description, link, priority }) => {
+  return (
+    <div className={styles.moduleCard}>
+      <div className={styles.moduleCardHeader}>
+        <span className={styles.moduleIcon}>{icon}</span>
+        <h3 className={styles.moduleTitle}>{title}</h3>
+      </div>
+      <p className={styles.moduleDescription}>{description}</p>
+      <a href={link} className={styles.moduleLink}>
+        Learn More
+      </a>
+    </div>
+  );
+};
+
+// CTA Button Component
+const CTAButton: React.FC<CTAButtonProps> = ({ text, link, trackingId }) => {
+  return (
+    <a
+      href={link}
+      className={styles.ctaButton}
+      data-tracking-id={trackingId}
+    >
+      {text}
+    </a>
+  );
+};
+
+// Hardware Item Component
+const HardwareItem: React.FC<HardwareItemProps> = ({ id, name, icon, description, detailsLink }) => {
+  return (
+    <div className={styles.hardwareItem}>
+      <div className={styles.hardwareIcon}>{icon}</div>
+      <h4 className={styles.hardwareName}>{name}</h4>
+      <p className={styles.hardwareDescription}>{description}</p>
+      <a href={detailsLink} className={styles.hardwareLink}>Details</a>
+    </div>
+  );
+};
+
+// Main HomepageFeatures component
+const HomepageFeatures: React.FC = () => {
+  // Define module data structure for the four main course modules
+  const modules = [
+    {
+      id: 'module-1',
+      title: 'The Robotic Nervous System (ROS 2)',
+      icon: '🤖',
+      description: 'Master middleware for robot control with ROS 2 nodes, topics, and services',
+      link: '/docs/modules/module-1',
+      priority: 1
+    },
+    {
+      id: 'module-2',
+      title: 'The Digital Twin (Gazebo & Unity)',
+      icon: '🎮',
+      description: 'Build physics simulations and high-fidelity virtual environments',
+      link: '/docs/modules/module-2',
+      priority: 2
+    },
+    {
+      id: 'module-3',
+      title: 'The AI-Robot Brain (NVIDIA Isaac)',
+      icon: '🧠',
+      description: 'Advanced perception, training, and sim-to-real transfer techniques',
+      link: '/docs/modules/module-3',
+      priority: 3
+    },
+    {
+      id: 'module-4',
+      title: 'Vision-Language-Action (VLA)',
+      icon: '🗣️',
+      description: 'Integrate voice commands and LLMs for cognitive robot planning',
+      link: '/docs/modules/module-4',
+      priority: 4
+    }
+  ];
+
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+        <h2 className={styles.sectionTitle}>Course Modules</h2>
+        <div className={styles.moduleGrid}>
+          {modules.map((module) => (
+            <ModuleCard
+              key={module.id}
+              id={module.id}
+              title={module.title}
+              icon={module.icon}
+              description={module.description}
+              link={module.link}
+              priority={module.priority}
+            />
           ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default HomepageFeatures;
+export { ModuleCard, CTAButton, HardwareItem };

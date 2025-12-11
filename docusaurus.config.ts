@@ -70,17 +70,12 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'AI-Driven Book',
+      title: 'AI Native Development',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
       },
       items: [
-        {
-          to: '/',
-          label: 'AI Native Development',
-          position: 'left',
-        },
         {
           to: '/docs/modules/module-1',
           label: 'Book',

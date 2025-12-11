@@ -3,6 +3,383 @@
  * and scoped locally.
  */
 
+/* Hero Section Styles */
+.heroSection {
+  background: linear-gradient(135deg, #1A73E8 0%, #8B5CF6 100%);
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.heroContent {
+  max-width: 800px;
+  padding: 0 1rem;
+  margin: auto;
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.heroTagline {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 996px) {
+  .heroSection {
+    padding: 2rem 0;
+    min-height: 80vh;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroTagline {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroTagline {
+    font-size: 1.1rem;
+  }
+}
+
+/* Course Overview Section */
+.courseOverview {
+  padding: 4rem 0;
+  background-color: #F5F7FA;
+}
+
+/* Learning Outcomes Section */
+.learningOutcomes {
+  padding: 4rem 0;
+  background-color: #F5F7FA;
+}
+
+.outcomesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.outcomeItem {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.checkmark {
+  color: #39FF14; /* Neon Green */
+  font-weight: bold;
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.outcomeText {
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Hardware Requirements Section */
+.hardwareRequirements {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.hardwareGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.hardwareItem {
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #F9FAFB;
+}
+
+.hardwareItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(26, 115, 232, 0.15);
+}
+
+.hardwareIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.hardwareName {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: #2E2E2E;
+}
+
+.hardwareDescription {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.hardwareLink {
+  display: inline-block;
+  color: #1A73E8;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.hardwareLink:hover {
+  color: #39FF14;
+  text-decoration: underline;
+}
+
+/* "Why Physical AI Matters" Section */
+.whyMattersSection {
+  padding: 4rem 0;
+  background-color: white; 
+  /*Midnight Black */
+  color: #555;
+  position: relative;
+  overflow: hidden;
+}
+
+.whyMattersSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-left: 5px solid #39FF14; /* Neon Green accent */
+}
+
+.whyMattersContent {
+  position: relative;
+  z-index: 1;
+}
+
+.whyMattersDescription {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.whyMattersPoints {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.point {
+  /* background-color: rgba(255, 255, 255, 0.05); */
+  background-color: #f5f7fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 3px solid #39FF14;
+}
+
+.pointTitle {
+  color: #39FF14; /* Neon Green */
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Call-to-Action Section */
+.ctaSection {
+  padding: 8rem 0;
+  background: linear-gradient(135deg, #1A73E8 0%, #8B5CF6 100%);
+  text-align: center;
+  color: white;
+  /* margin-top: 3rem; */
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.ctaDescription {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Typography and general styles */
+:global {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+
+  /* Ensure consistent typography (48-64px for hero headings, 16-18px for body text) */
+  .heroTitle {
+    font-size: 4rem; /* Approximately 64px at standard zoom */
+  }
+
+  .sectionTitle {
+    font-size: 2rem; /* Approximately 32px, headings are bold */
+  }
+
+  p {
+    font-size: 1.125rem; /* Approximately 18px */
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add neon-accent hover underline effect to links */
+a {
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:hover {
+  color: #39FF14 !important; /* Neon Green */
+  text-decoration-color: #39FF14 !important;
+}
+
+/* Fade-in animations for scroll */
+.fade-in-element {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2E2E2E;
+}
+
+.courseDescription {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  text-align: center;
+}
+
+/* Buttons */
+.button--primary {
+  background-color: #39FF14 !important; /* Neon Green */
+  border-color: #39FF14 !important;
+  color: #0A0A0A !important;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+  transition: all 0.3s ease;
+}
+
+.button--primary:hover {
+  background-color: #2ed712 !important;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 1024px) {
+  .hardwareGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .hardwareGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .whyMattersPoints {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .outcomesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hardwareGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hardwareItem {
+    margin-bottom: 1rem;
+  }
+
+  .whyMattersPoints {
+    grid-template-columns: 1fr;
+  }
+
+  .whyMattersDescription {
+    font-size: 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .ctaTitle {
+    font-size: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .heroBanner {
   padding: 4rem 0;
   text-align: center;
