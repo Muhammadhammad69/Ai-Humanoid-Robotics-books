@@ -77,20 +77,19 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          to: '/',
+          label: 'AI Native Development',
           position: 'left',
-          label: 'Modules',
         },
-        {to: '/docs/preface', label: 'Preface', position: 'left'},
-        {to: '/docs/appendices', label: 'Appendices', position: 'left'},
-        {to: '/docs/glossary', label: 'Glossary', position: 'left'},
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
-          position: 'right',
+          to: '/docs/modules/module-1',
+          label: 'Book',
+          position: 'left',
         },
+        {
+          type: 'search',
+          position: 'right',
+        }
       ],
     },
     footer: {

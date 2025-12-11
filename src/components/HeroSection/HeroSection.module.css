@@ -1,0 +1,259 @@
+/* HeroSection.module.css */
+
+/* Main hero section container */
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #dbeafe 50%, #ede9fe 75%, #fae8ff 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  transition: all 0.3s ease;
+}
+
+/* Container with max-width constraint */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Grid layout for desktop */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Image column styling */
+.imageColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 4/3;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.heroImage.loaded {
+  opacity: 1;
+}
+
+.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  border-radius: 0.75rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Content column styling */
+.contentColumn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.contentWrapper {
+  max-width: 100%;
+  text-align: left;
+}
+
+/* Typography styles */
+.heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+  text-align: left;
+}
+
+.description {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+/* CTA Button styling */
+.ctaButton {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.1);
+  text-align: center;
+}
+
+.ctaButton:hover,
+.ctaButton.hovered {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.1);
+}
+
+.ctaButton:focus {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+
+/* Atmospheric background abstract shapes */
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 300px;
+  height: 300px;
+  border-radius: 47% 53% 43% 57% / 44% 44% 56% 56%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: 1;
+}
+
+.heroSection::after {
+  content: '';
+  position: absolute;
+  bottom: 15%;
+  right: 5%;
+  width: 250px;
+  height: 250px;
+  border-radius: 53% 47% 42% 58% / 57% 44% 56% 43%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: 1;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .heading {
+    font-size: 2.25rem;
+  }
+
+  .description {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    min-height: auto;
+    padding: 3rem 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .imageColumn {
+    order: 1; /* Image above content on mobile */
+  }
+
+  .contentColumn {
+    order: 2;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contentWrapper {
+    text-align: center;
+  }
+
+  .heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .description {
+    font-size: 1.125rem;
+    text-align: center;
+  }
+
+  .ctaButton {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 1.75rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .ctaButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .heroSection {
+    animation: none;
+  }
+
+  .ctaButton {
+    transition: none;
+  }
+}

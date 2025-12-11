@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import HeroSection from '@site/src/components/HeroSection';
 
 import styles from './index.module.css';
 
@@ -35,7 +36,12 @@ export default function Home(): ReactNode {
     <Layout
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
+      <HeroSection
+        heading="AI-Powered Humanoid Robotics"
+        description="Explore the future of artificial intelligence and robotics with our comprehensive guide"
+        ctaUrl="/docs/intro"
+        imageAlt="AI humanoid robot illustration"
+      />
       <main>
         <HomepageFeatures />
       </main>
