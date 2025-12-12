@@ -7,7 +7,7 @@ import Heading from '@theme/Heading';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Translate, {translate} from '@docusaurus/Translate';
 
-import styles from './index.module.css';
+import styles from '@site/src/pages/index.module.css';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -23,7 +23,7 @@ function HomepageHeader() {
             className="button button--secondary button--lg"
             to="/docs/intro">
             <Translate id="homepage.header.tutorial-link" description="Link text for docusaurus tutorial on homepage header">
-              Docusaurus Tutorial - 5min ⏱️
+              ڈوکوسورس ٹیوٹوریل - 5 منٹ ⏱️
             </Translate>
           </Link>
         </div>
@@ -39,42 +39,42 @@ export default function Home(): ReactNode {
   const learningOutcomes = [
     translate({
       id: 'homepage.learning-outcomes.1',
-      message: 'Design and implement robotic control systems using ROS 2',
+      message: 'ROS 2 کا استعمال کرتے ہوئے روبوٹک کنٹرول سسٹم ڈیزائن اور نافذ کریں',
       description: 'Learning outcome 1 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.2',
-      message: 'Create realistic physics simulations with Gazebo and Unity',
+      message: 'گیزبو اور یونٹی کے ساتھ حقیقی فزکس سیمولیشنز تیار کریں',
       description: 'Learning outcome 2 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.3',
-      message: 'Develop AI perception and decision-making algorithms for robots',
+      message: 'روبوٹس کے لیے AI ادراک اور فیصلہ سازی الگورتھم تیار کریں',
       description: 'Learning outcome 3 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.4',
-      message: 'Apply sim-to-real transfer techniques for real-world deployment',
+      message: 'حقیقی دنیا کی تنصیب کے لیے سیمولیٹ سے ریل ٹرانسفر تکنیکیں لاگو کریں',
       description: 'Learning outcome 4 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.5',
-      message: 'Build cognitive systems that integrate vision, language, and action',
+      message: 'وژن، زبان، اور ایکشن کو ضم کرنے والے کوگنیٹو سسٹم تیار کریں',
       description: 'Learning outcome 5 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.6',
-      message: 'Implement voice-command interfaces and natural language processing for robots',
+      message: 'روبوٹس کے لیے آواز کمانڈ انٹرفیسز اور قدرتی زبان کی پروسیسنگ نافذ کریں',
       description: 'Learning outcome 6 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.7',
-      message: 'Design embodied AI systems that interact with physical environments',
+      message: 'جسمانی ماحول کے ساتھ بات چیت کرنے والے ایمبیڈڈ AI سسٹم ڈیزائن کریں',
       description: 'Learning outcome 7 on homepage'
     }),
     translate({
       id: 'homepage.learning-outcomes.8',
-      message: 'Develop skills in machine learning for robotics applications',
+      message: 'روبوٹکس ایپلی کیشنز کے لیے مشین لرننگ میں مہارت حاصل کریں',
       description: 'Learning outcome 8 on homepage'
     })
   ];
@@ -85,13 +85,13 @@ export default function Home(): ReactNode {
       id: 'workstation',
       name: translate({
         id: 'homepage.hardware.workstation.name',
-        message: 'Development Workstation',
+        message: 'ترقی کا ورک اسٹیشن',
         description: 'Name for development workstation in hardware requirements'
       }),
       icon: '💻',
       description: translate({
         id: 'homepage.hardware.workstation.description',
-        message: 'High-performance computer with multi-core processor and dedicated GPU for AI/ML computations',
+        message: 'AI/ML کمپیوٹیشنز کے لیے ملٹی-کور پروسیسر اور مخصوص GPU کے ساتھ ہائی پرفارمنس کمپیوٹر',
         description: 'Description for development workstation in hardware requirements'
       }),
       detailsLink: '/docs/hardware/workstation'
@@ -100,13 +100,13 @@ export default function Home(): ReactNode {
       id: 'edge-kit',
       name: translate({
         id: 'homepage.hardware.edge-kit.name',
-        message: 'Edge Computing Kit',
+        message: 'ایج کمپیوٹنگ کٹ',
         description: 'Name for edge computing kit in hardware requirements'
       }),
       icon: '📦',
       description: translate({
         id: 'homepage.hardware.edge-kit.description',
-        message: 'NVIDIA Jetson or similar edge computing platform for running AI models on robots',
+        message: 'روبوٹس پر AI ماڈلز چلانے کے لیے NVIDIA جیٹسن یا اسی قسم کا ایج کمپیوٹنگ پلیٹ فارم',
         description: 'Description for edge computing kit in hardware requirements'
       }),
       detailsLink: '/docs/hardware/edge-kit'
@@ -115,13 +115,13 @@ export default function Home(): ReactNode {
       id: 'robot',
       name: translate({
         id: 'homepage.hardware.robot.name',
-        message: 'Humanoid Robot',
+        message: 'ہیومنوائڈ روبوٹ',
         description: 'Name for humanoid robot in hardware requirements'
       }),
       icon: '🤖',
       description: translate({
         id: 'homepage.hardware.robot.description',
-        message: 'Programmable humanoid robot platform for testing and deployment of AI algorithms',
+        message: 'AI الگورتھم کی ٹیسٹنگ اور تنصیب کے لیے قابل پروگرام ہیومنوائڈ روبوٹ پلیٹ فارم',
         description: 'Description for humanoid robot in hardware requirements'
       }),
       detailsLink: '/docs/hardware/robot-platform'
@@ -132,12 +132,12 @@ export default function Home(): ReactNode {
     <Layout
       title={translate({
         id: 'homepage.layout.title',
-        message: `Hello from ${siteConfig.title}`,
+        message: `${siteConfig.title} سے خوش آمدید`,
         description: 'Title for homepage layout'
       })}
       description={translate({
         id: 'homepage.layout.description',
-        message: 'Description will go into a meta tag in <head />',
+        message: 'وضاحت <head /> میں میٹا ٹیگ میں جائے گی',
         description: 'Description for homepage layout'
       })}>
       {/* Hero section with gradient background */}
@@ -147,12 +147,12 @@ export default function Home(): ReactNode {
           <div className={styles.heroContent}>
             <Heading as="h1" className={styles.heroTitle}>
               <Translate id="homepage.hero.title" description="Title for homepage hero section">
-                Physical AI & Humanoid Robotics
+                فزکل AI اور ہیومنوائڈ روبوٹکس
               </Translate>
             </Heading>
             <p className={styles.heroTagline}>
               <Translate id="homepage.hero.tagline" description="Tagline for homepage hero section">
-                Mastering embodied intelligence for the next generation of autonomous systems
+                خودمختار سسٹم کی اگلی نسل کے لیے جسمانی انٹیلی جنس کا ماسٹر بنیں
               </Translate>
             </p>
             {/* <div className={styles.heroButtons}>
@@ -169,14 +169,14 @@ export default function Home(): ReactNode {
                     className="button button--primary button--lg"
                     to="/docs/intro">
                     <Translate id="homepage.hero.start-learning-now" description="Start learning now button text in hero section">
-                      Start Learning Now
+                      ابھی سیکھنا شروع کریں
                     </Translate>
                   </Link>
                   <Link
                     className="button button--secondary button--lg"
                     to="/docs/modules/module-1">
                     <Translate id="homepage.hero.explore-modules" description="Explore modules button text in hero section">
-                      Explore Modules
+                      ماڈیولز دریافت کریں
                     </Translate>
                   </Link>
                 </div>
@@ -191,14 +191,12 @@ export default function Home(): ReactNode {
             <div className="col col--8 col--offset-2">
               <Heading as="h2" className={styles.sectionTitle}>
                 <Translate id="homepage.course-overview.title" description="Title for course overview section">
-                  About This Course
+                  اس کورس کے بارے میں
                 </Translate>
               </Heading>
               <p className={styles.courseDescription}>
                 <Translate id="homepage.course-overview.description" description="Description for course overview section">
-                  This comprehensive course covers the cutting-edge intersection of artificial intelligence and robotics,
-                  focusing on physical intelligence - how robots understand and interact with the real world.
-                  You'll learn to build embodied AI systems that can perceive, reason, and act in complex environments.
+                  یہ جامع کورس مصنوعی ذہانت اور روبوٹکس کے جدید تقاطع کو احاطہ کرتا ہے، جسمانی ذہانت پر توجہ مرکوز کرتا ہے - کہ روبوٹس حقیقی دنیا کو کیسے سمجھتے ہیں اور اس کے ساتھ بات چیت کرتے ہیں۔ آپ جسمانی AI سسٹم تیار کرنا سیکھیں گے جو جٹیل ماحول میں سمجھ سکیں، سوچ سکیں، اور کارروائی کر سکیں۔
                 </Translate>
               </p>
             </div>
@@ -216,7 +214,7 @@ export default function Home(): ReactNode {
               <div className="col col--10 col--offset-1">
                 <Heading as="h2" className={styles.sectionTitle}>
                   <Translate id="homepage.learning-outcomes.title" description="Title for learning outcomes section">
-                    What You'll Learn
+                    آپ کیا سیکھیں گے
                   </Translate>
                 </Heading>
                 <div className={styles.outcomesGrid}>
@@ -239,7 +237,7 @@ export default function Home(): ReactNode {
               <div className="col col--10 col--offset-1">
                 <Heading as="h2" className={styles.sectionTitle}>
                   <Translate id="homepage.hardware-requirements.title" description="Title for hardware requirements section">
-                    Hardware Requirements
+                    ہارڈ ویئر کی ضروریات
                   </Translate>
                 </Heading>
                 <div className={styles.hardwareGrid}>
@@ -250,7 +248,7 @@ export default function Home(): ReactNode {
                       <p className={styles.hardwareDescription}>{item.description}</p>
                       <Link to={item.detailsLink} className={styles.hardwareLink}>
                         <Translate id="homepage.hardware-requirements.details-link" description="Details link text in hardware requirements section">
-                          Details
+                          تفصیلات
                         </Translate>
                       </Link>
                     </div>
@@ -268,51 +266,49 @@ export default function Home(): ReactNode {
               <div className="col col--10 col--offset-1">
                 <Heading as="h2" className={styles.sectionTitle}>
                   <Translate id="homepage.why-matters.title" description="Title for why physical AI matters section">
-                    Why Physical AI Matters
+                    فزکل AI کیوں اہم ہے
                   </Translate>
                 </Heading>
                 <div className={styles.whyMattersContent}>
                   <p className={styles.whyMattersDescription}>
                     <Translate id="homepage.why-matters.description" description="Description for why physical AI matters section">
-                      Physical AI represents a paradigm shift from traditional AI that operates on abstract data to AI that
-                      understands and interacts with the physical world. This embodied intelligence is crucial for creating
-                      robots that can truly assist humans in real-world environments.
+                      فزکل AI روایتی AI سے ایک پیراڈائم شفٹ کی نمائندگی کرتا ہے جو مبہم ڈیٹا پر کام کرتا ہے تاکہ AI کو سمجھا جا سکے اور جسمانی دنیا کے ساتھ بات چیت کی جا سکے۔ یہ جسمانی انٹیلی جنس حقیقی دنیا کے ماحول میں انسانوں کی مدد کرنے والے روبوٹس تیار کرنے کے لیے اہم ہے۔
                     </Translate>
                   </p>
                   <div className={styles.whyMattersPoints}>
                     <div className={styles.point}>
                       <h3 className={styles.pointTitle}>
                         <Translate id="homepage.why-matters.point-1.title" description="Title for first point in why physical AI matters section">
-                          Real-World Application
+                          حقیقی دنیا کی ایپلی کیشن
                         </Translate>
                       </h3>
                       <p>
                         <Translate id="homepage.why-matters.point-1.description" description="Description for first point in why physical AI matters section">
-                          Physical AI systems learn from and adapt to the complexities of the real world, leading to more robust and practical AI solutions.
+                          فزکل AI سسٹم حقیقی دنیا کی جٹیل صورتحال سے سیکھتے ہیں اور اس کے مطابق ایڈجسٹ ہوتے ہیں، جس کے نتیجے میں زیادہ مضبوط اور عملی AI حل نکلتے ہیں۔
                         </Translate>
                       </p>
                     </div>
                     <div className={styles.point}>
                       <h3 className={styles.pointTitle}>
                         <Translate id="homepage.why-matters.point-2.title" description="Title for second point in why physical AI matters section">
-                          Human-Robot Interaction
+                          انسان-روبوٹ بات چیت
                         </Translate>
                       </h3>
                       <p>
                         <Translate id="homepage.why-matters.point-2.description" description="Description for second point in why physical AI matters section">
-                          Embodied AI enables natural and intuitive interaction between humans and robots in shared physical spaces.
+                          جس جسمانی انٹیلی جنس انسانوں اور روبوٹس کے درمیان مشترکہ جسمانی جگہوں میں قدرتی اور سمجھدار بات چیت کو فعال بناتی ہے۔
                         </Translate>
                       </p>
                     </div>
                     <div className={styles.point}>
                       <h3 className={styles.pointTitle}>
                         <Translate id="homepage.why-matters.point-3.title" description="Title for third point in why physical AI matters section">
-                          Generalization
+                          جنرلائزیشن
                         </Translate>
                       </h3>
                       <p>
                         <Translate id="homepage.why-matters.point-3.description" description="Description for third point in why physical AI matters section">
-                          Physical AI systems develop better generalization capabilities by learning from multi-sensory physical experiences.
+                          فزکل AI سسٹم ملٹی-سینسری جسمانی تجربات سے سیکھ کر بہتر جنرلائزیشن کی صلاحیتیں تیار کرتے ہیں۔
                         </Translate>
                       </p>
                     </div>
@@ -331,12 +327,12 @@ export default function Home(): ReactNode {
               <div className="col col--8 col--offset-2 text--center">
                 <Heading as="h2" className={styles.ctaTitle}>
                   <Translate id="homepage.cta.title" description="Title for call-to-action section">
-                    Ready to Start Your Journey in Physical AI & Robotics?
+                    فزکل AI اور روبوٹکس میں اپنی سفر شروع کرنے کے لیے تیار ہیں؟
                   </Translate>
                 </Heading>
                 <p className={styles.ctaDescription}>
                   <Translate id="homepage.cta.description" description="Description for call-to-action section">
-                    Join thousands of students learning the future of embodied intelligence.
+                    جسمانی انٹیلی جنس کے مستقبل کو سیکھنے والے ہزاروں طلباء میں شامل ہوں۔
                   </Translate>
                 </p>
                 <div className={styles.ctaButtons}>
@@ -344,14 +340,14 @@ export default function Home(): ReactNode {
                     className="button button--primary button--lg"
                     to="/docs/intro">
                     <Translate id="homepage.cta.start-learning" description="Start learning button text in CTA section">
-                      Start Learning Now
+                      ابھی سیکھنا شروع کریں
                     </Translate>
                   </Link>
                   <Link
                     className="button button--secondary button--lg"
                     to="/docs/modules/module-1">
                     <Translate id="homepage.cta.explore-modules" description="Explore modules button text in CTA section">
-                      Explore Modules
+                      ماڈیولز دریافت کریں
                     </Translate>
                   </Link>
                 </div>

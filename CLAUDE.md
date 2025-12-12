@@ -208,3 +208,10 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- TypeScript (4.9.5), Docusaurus 3.9.2 + @docusaurus/core, @docusaurus/module-type-aliases, @docusaurus/preset-classic (006-i18n-language)
+- File-based translation system using JSON and markdown files in i18n/ directory (006-i18n-language)
+
+## Recent Changes
+- 006-i18n-language: Added TypeScript (4.9.5), Docusaurus 3.9.2 + @docusaurus/core, @docusaurus/module-type-aliases, @docusaurus/preset-classic

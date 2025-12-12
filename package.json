@@ -11,6 +11,10 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
+    "write-translations-ur": "docusaurus write-translations --locale ur",
+    "start:ur": "docusaurus start --locale ur",
+    "build:ur": "docusaurus build --locale ur",
+    "build:all": "docusaurus build --locale en,ur",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
   },

@@ -1,0 +1,42 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Module 1 — The Robotic Nervous System (ROS 2)": {
+    "message": "Module 1 — The Robotic Nervous System (ROS 2)",
+    "description": "The label for category 'Module 1 — The Robotic Nervous System (ROS 2)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 2 — The Digital Twin (Gazebo & Unity)": {
+    "message": "Module 2 — The Digital Twin (Gazebo & Unity)",
+    "description": "The label for category 'Module 2 — The Digital Twin (Gazebo & Unity)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 3 — The AI-Robot Brain (NVIDIA Isaac™)": {
+    "message": "Module 3 — The AI-Robot Brain (NVIDIA Isaac™)",
+    "description": "The label for category 'Module 3 — The AI-Robot Brain (NVIDIA Isaac™)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Module 4 — Vision-Language-Action (VLA)": {
+    "message": "Module 4 — Vision-Language-Action (VLA)",
+    "description": "The label for category 'Module 4 — Vision-Language-Action (VLA)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item 'Introduction' in sidebar 'tutorialSidebar', linking to the doc intro"
+  },
+  "sidebar.hardwareSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item 'Introduction' in sidebar 'hardwareSidebar', linking to the doc hardware/intro"
+  },
+  "sidebar.hardwareSidebar.doc.Digital Twin Workstation Requirements": {
+    "message": "Digital Twin Workstation Requirements",
+    "description": "The label for the doc item 'Digital Twin Workstation Requirements' in sidebar 'hardwareSidebar', linking to the doc hardware/workstation"
+  },
+  "sidebar.hardwareSidebar.doc.Physical AI Edge Kit": {
+    "message": "Physical AI Edge Kit",
+    "description": "The label for the doc item 'Physical AI Edge Kit' in sidebar 'hardwareSidebar', linking to the doc hardware/edge-kit"
+  },
+  "sidebar.hardwareSidebar.doc.Robot Platform Options": {
+    "message": "Robot Platform Options",
+    "description": "The label for the doc item 'Robot Platform Options' in sidebar 'hardwareSidebar', linking to the doc hardware/robot-platform"
+  }
+}

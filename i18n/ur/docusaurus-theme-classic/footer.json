@@ -1,0 +1,38 @@
+{
+  "link.title.Docs": {
+    "message": "دستاویزات",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Community": {
+    "message": "کمیونٹی",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.item.label.Introduction": {
+    "message": "تعارف",
+    "description": "The label of footer link with label=Introduction linking to /docs/intro"
+  },
+  "link.item.label.Explore Modules": {
+    "message": "موڈیولز دریافت کریں",
+    "description": "The label of footer link with label=Explore Modules linking to /docs/modules/module-1"
+  },
+  "link.item.label.Explore Hardware Platforms": {
+    "message": "ہارڈ ویئر پلیٹ فارمز دریافت کریں",
+    "description": "The label of footer link with label=Explore Hardware Platforms linking to /docs/hardware/intro"
+  },
+  "link.item.label.Stack Overflow": {
+    "message": "اسٹیک اور فلو",
+    "description": "The label of footer link with label=Stack Overflow linking to https://stackoverflow.com/questions/tagged/docusaurus"
+  },
+  "link.item.label.Discord": {
+    "message": "ڈسکورڈ",
+    "description": "The label of footer link with label=Discord linking to https://discordapp.com/invite/docusaurus"
+  },
+  "link.item.label.X": {
+    "message": "ایکس",
+    "description": "The label of footer link with label=X linking to https://x.com/docusaurus"
+  },
+  "copyright": {
+    "message": "کاپی رائٹ © 2025 GIAIC_Quatar_04. ڈوکوسورس کے ساتھ تیار کیا گیا۔",
+    "description": "The footer copyright"
+  }
+}

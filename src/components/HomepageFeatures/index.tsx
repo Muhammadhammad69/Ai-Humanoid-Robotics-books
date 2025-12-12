@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
+import Translate, {translate} from '@docusaurus/Translate';
 
 // Define TypeScript interfaces for our data structures
 interface ModuleCardProps {
@@ -37,7 +38,9 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ id, title, icon, description, l
       </div>
       <p className={styles.moduleDescription}>{description}</p>
       <a href={link} className={styles.moduleLink}>
-        Learn More
+        <Translate id="homepage.features.module-card.learn-more" description="Learn more link text on module card">
+          Learn More
+        </Translate>
       </a>
     </div>
   );
@@ -63,7 +66,11 @@ const HardwareItem: React.FC<HardwareItemProps> = ({ id, name, icon, description
       <div className={styles.hardwareIcon}>{icon}</div>
       <h4 className={styles.hardwareName}>{name}</h4>
       <p className={styles.hardwareDescription}>{description}</p>
-      <a href={detailsLink} className={styles.hardwareLink}>Details</a>
+      <a href={detailsLink} className={styles.hardwareLink}>
+        <Translate id="homepage.features.hardware-item.details" description="Details link text on hardware item">
+          Details
+        </Translate>
+      </a>
     </div>
   );
 };
@@ -74,33 +81,65 @@ const HomepageFeatures: React.FC = () => {
   const modules = [
     {
       id: 'module-1',
-      title: 'The Robotic Nervous System (ROS 2)',
+      title: translate({
+        id: 'homepage.features.module-1.title',
+        message: 'The Robotic Nervous System (ROS 2)',
+        description: 'Title for module 1 card on homepage'
+      }),
       icon: '🤖',
-      description: 'Master middleware for robot control with ROS 2 nodes, topics, and services',
+      description: translate({
+        id: 'homepage.features.module-1.description',
+        message: 'Master middleware for robot control with ROS 2 nodes, topics, and services',
+        description: 'Description for module 1 card on homepage'
+      }),
       link: '/docs/modules/module-1',
       priority: 1
     },
     {
       id: 'module-2',
-      title: 'The Digital Twin (Gazebo & Unity)',
+      title: translate({
+        id: 'homepage.features.module-2.title',
+        message: 'The Digital Twin (Gazebo & Unity)',
+        description: 'Title for module 2 card on homepage'
+      }),
       icon: '🎮',
-      description: 'Build physics simulations and high-fidelity virtual environments',
+      description: translate({
+        id: 'homepage.features.module-2.description',
+        message: 'Build physics simulations and high-fidelity virtual environments',
+        description: 'Description for module 2 card on homepage'
+      }),
       link: '/docs/modules/module-2',
       priority: 2
     },
     {
       id: 'module-3',
-      title: 'The AI-Robot Brain (NVIDIA Isaac)',
+      title: translate({
+        id: 'homepage.features.module-3.title',
+        message: 'The AI-Robot Brain (NVIDIA Isaac)',
+        description: 'Title for module 3 card on homepage'
+      }),
       icon: '🧠',
-      description: 'Advanced perception, training, and sim-to-real transfer techniques',
+      description: translate({
+        id: 'homepage.features.module-3.description',
+        message: 'Advanced perception, training, and sim-to-real transfer techniques',
+        description: 'Description for module 3 card on homepage'
+      }),
       link: '/docs/modules/module-3',
       priority: 3
     },
     {
       id: 'module-4',
-      title: 'Vision-Language-Action (VLA)',
+      title: translate({
+        id: 'homepage.features.module-4.title',
+        message: 'Vision-Language-Action (VLA)',
+        description: 'Title for module 4 card on homepage'
+      }),
       icon: '🗣️',
-      description: 'Integrate voice commands and LLMs for cognitive robot planning',
+      description: translate({
+        id: 'homepage.features.module-4.description',
+        message: 'Integrate voice commands and LLMs for cognitive robot planning',
+        description: 'Description for module 4 card on homepage'
+      }),
       link: '/docs/modules/module-4',
       priority: 4
     }
@@ -109,7 +148,11 @@ const HomepageFeatures: React.FC = () => {
   return (
     <section className={styles.features}>
       <div className="container">
-        <h2 className={styles.sectionTitle}>Course Modules</h2>
+        <h2 className={styles.sectionTitle}>
+          <Translate id="homepage.features.section-title" description="Section title for course modules on homepage">
+            Course Modules
+          </Translate>
+        </h2>
         <div className={styles.moduleGrid}>
           {modules.map((module) => (
             <ModuleCard

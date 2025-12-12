@@ -27,7 +27,15 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ur'],
+    localeConfigs: {
+      ur: {
+        label: 'اردو',
+        direction: 'rtl',
+        htmlLang: 'ur',
+        path: 'ur',
+      },
+    },
   },
 
   presets: [
@@ -80,6 +88,10 @@ const config: Config = {
           to: '/docs/modules/module-1',
           label: 'Book',
           position: 'left',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         {
           type: 'search',

@@ -1,0 +1,132 @@
+# API Contract: Language Switching Service
+
+## Overview
+Contract for the language switching functionality in the AI-Humanoid Robotics educational website. This defines the interface for switching between English and Urdu languages while preserving page context.
+
+## Endpoints
+
+### GET /api/locale/available
+**Description**: Get list of available locales for the website
+
+**Request**:
+```
+GET /api/locale/available
+Content-Type: application/json
+```
+
+**Response**:
+```
+Status: 200 OK
+Content-Type: application/json
+
+{
+  "locales": [
+    {
+      "code": "en",
+      "label": "English",
+      "isDefault": true,
+      "direction": "ltr"
+    },
+    {
+      "code": "ur",
+      "label": "اردو",
+      "isDefault": false,
+      "direction": "rtl"
+    }
+  ]
+}
+```
+
+**Error Responses**:
+- `500 Internal Server Error` - Configuration error
+
+### POST /api/locale/switch
+**Description**: Switch user's preferred locale and get redirect information
+
+**Request**:
+```
+POST /api/locale/switch
+Content-Type: application/json
+
+{
+  "targetLocale": "ur",
+  "currentPath": "/docs/intro",
+  "preserveContext": true
+}
+```
+
+**Response**:
+```
+Status: 200 OK
+Content-Type: application/json
+
+{
+  "status": "success",
+  "redirectUrl": "/ur/docs/intro",
+  "newLocale": "ur",
+  "contextPreserved": true,
+  "transitionTime": 1.2
+}
+```
+
+**Error Responses**:
+- `400 Bad Request` - Invalid locale or missing parameters
+- `500 Internal Server Error` - System error during locale switch
+
+### GET /api/translations/{locale}/{path}
+**Description**: Get translation for specific content path in target locale
+
+**Request**:
+```
+GET /api/translations/ur/docs/intro
+Content-Type: application/json
+```
+
+**Response**:
+```
+Status: 200 OK
+Content-Type: application/json
+
+{
+  "locale": "ur",
+  "path": "/docs/intro",
+  "content": "translated content here",
+  "fallback": false,
+  "direction": "rtl",
+  "lastModified": "2025-12-12T10:30:00Z"
+}
+```
+
+**Error Responses**:
+- `404 Not Found` - Translation not available
+- `500 Internal Server Error` - System error
+
+## Data Structures
+
+### Locale Object
+```json
+{
+  "code": "ur",
+  "label": "اردو",
+  "isDefault": false,
+  "direction": "rtl"
+}
+```
+
+### Translation Response
+```json
+{
+  "locale": "ur",
+  "path": "/docs/intro",
+  "content": "translated content here",
+  "fallback": false,
+  "direction": "rtl",
+  "lastModified": "2025-12-12T10:30:00Z"
+}
+```
+
+## Validation Rules
+- Locale code must be one of supported values (en, ur)
+- Current path must be a valid website path
+- Response time must be under 2 seconds
+- Fallback content must be provided when translation unavailable

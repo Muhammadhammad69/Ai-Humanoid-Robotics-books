@@ -10,7 +10,8 @@
       "Bash(.specify/scripts/bash/create-phr.sh --title \"Module 4 VLA Tasks Generation\" --stage tasks --feature \"004-vla-module\" --json)",
       "SlashCommand(/sp.implement)",
       "Bash(.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
-      "Bash(.specify/scripts/bash/create-phr.sh --title \"Plan Docusaurus Homepage\" --stage plan --feature \"001-docusaurus-homepage\" --json)"
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Plan Docusaurus Homepage\" --stage plan --feature \"001-docusaurus-homepage\" --json)",
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"i18n Urdu Support Spec\" --stage spec --feature \"006-i18n-language\" --json)"
     ]
   }
 }
