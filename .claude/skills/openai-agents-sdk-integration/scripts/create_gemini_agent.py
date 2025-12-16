@@ -13,7 +13,7 @@ from agents import Agent, Runner, OpenAIChatCompletionsModel
 
 
 
-def create_gemini_agent(name="Gemini Assistant", instructions="You are a helpful assistant.", model="gemini-1.5-pro"):
+def create_gemini_agent(name="Gemini Assistant", instructions="You are a helpful assistant.", model="gemini-2.5-flash"):
     """
     Create a Gemini agent with the specified parameters using the official custom model provider pattern.
 

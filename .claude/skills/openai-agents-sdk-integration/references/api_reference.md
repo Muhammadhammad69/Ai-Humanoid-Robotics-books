@@ -210,7 +210,7 @@ os.environ["OPENAI_API_KEY"] = "your-gemini-api-key"
 
 agent = Agent(
     name="Gemini Agent",
-    model="gemini-1.5-pro"
+    model="gemini-2.5-flash"
 )
 ```
 

@@ -34,7 +34,7 @@ client = AsyncOpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     api_key="your-gemini-api-key"
 )
-model = OpenAIChatCompletionsModel(model="gemini-1.5-pro", openai_client=client)
+model = OpenAIChatCompletionsModel(model="gemini-2.5-flash", openai_client=client)
 agent = Agent(
     name="Gemini Agent",
     instructions="You are a helpful assistant.",
@@ -272,7 +272,7 @@ async def chat_with_agent(request: AgentRequest):
             agent = Agent(
                 name="Gemini Agent",
                 instructions="You are a helpful assistant.",
-                model="gemini-1.5-pro"
+                model="gemini-2.5-flash"
             )
         elif request.agent_type == "custom":
             # Configure for custom LLM

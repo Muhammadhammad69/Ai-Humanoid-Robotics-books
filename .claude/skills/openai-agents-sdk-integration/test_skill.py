@@ -80,12 +80,12 @@ def test_gemini_agent_creation():
         agent = create_gemini_agent(
             name="Test Gemini Agent",
             instructions="This is a test agent.",
-            model="gemini-1.5-pro"
+            model="gemini-2.5-flash"
         )
 
         # Verify agent properties
         assert agent.name == "Test Gemini Agent"
-        assert agent.model == "gemini-1.5-pro"
+        assert agent.model == "gemini-2.5-flash"
 
         # Restore original key
         if original_key is not None:
