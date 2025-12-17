@@ -1,0 +1,14 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Backend system for embedding book content and storing vectors in Qdrant using Cohere"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "qdrant-client>=1.9.0",
+    "cohere>=5.0.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0",
+    "markdown>=3.0",
+    "pytest>=8.0.0"
+]

@@ -14,7 +14,9 @@
       "Bash(.specify/scripts/bash/create-phr.sh --title \"i18n Urdu Support Spec\" --stage spec --feature \"006-i18n-language\" --json)",
       "Skill(skill-creator)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__get-library-docs"
+      "mcp__context7__get-library-docs",
+      "Bash(git fetch --all --prune)",
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Book Embeddings Implementation Plan\" --stage plan --feature \"001-book-embeddings\" --json)"
     ]
   }
 }
