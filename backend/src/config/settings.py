@@ -26,6 +26,14 @@ class Settings:
     DOCS_PATH: str = os.getenv("DOCS_PATH", "./docs")
     CHUNK_SIZE_TOKENS: int = int(os.getenv("CHUNK_SIZE_TOKENS", "512"))
 
+    # RAG Pipeline Configuration
+    TOP_K_RESULTS: int = int(os.getenv("TOP_K_RESULTS", "5"))
+    RELEVANCE_THRESHOLD: float = float(os.getenv("RELEVANCE_THRESHOLD", "0.3"))
+    TOKEN_BUDGET: int = int(os.getenv("TOKEN_BUDGET", "2000"))
+    MAX_SESSION_HISTORY: int = int(os.getenv("MAX_SESSION_HISTORY", "50"))
+    QUERY_TIMEOUT_SECONDS: int = int(os.getenv("QUERY_TIMEOUT_SECONDS", "30"))
+    DUPLICATE_THRESHOLD: float = float(os.getenv("DUPLICATE_THRESHOLD", "0.95"))
+
     @classmethod
     def validate(cls) -> None:
         """Validate that all required environment variables are set."""

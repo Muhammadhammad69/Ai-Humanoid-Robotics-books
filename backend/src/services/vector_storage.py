@@ -143,12 +143,131 @@ class VectorStorageService:
         Returns:
             List of search results
         """
-        results = self.client.search(
-            collection_name=self.collection_name,
-            query_vector=query_vector,
-            limit=limit
-        )
+        # Check if the search method exists, otherwise try query_points
+        if hasattr(self.client, 'search'):
+            results = self.client.search(
+                collection_name=self.collection_name,
+                query_vector=query_vector,
+                limit=limit
+            )
+        elif hasattr(self.client, 'query_points'):
+            results = self.client.query_points(
+                collection_name=self.collection_name,
+                query=query_vector,
+                limit=limit
+            )
+        else:
+            raise AttributeError("Qdrant client does not have 'search' or 'query_points' method")
+
         return results
+
+    def search_vectors(self, query_embedding: List[float], top_k: int = 10, filters: dict = None):
+        """
+        Search for similar vectors with filters and return formatted results.
+
+        Args:
+            query_embedding: The query embedding vector
+            top_k: Number of top results to return
+            filters: Dictionary of filters to apply
+
+        Returns:
+            List of RetrievedChunk objects
+        """
+        from ..models.query import RetrievedChunk
+        from qdrant_client.http.models import Filter, FieldCondition, MatchValue
+
+        # Build filter conditions if filters are provided
+        search_filter = None
+        if filters:
+            conditions = []
+            for key, value in filters.items():
+                # Only add filters for fields that are indexed in Qdrant
+                # Common indexed fields in our system: document_path, module, section_type, chapter_name
+                # Skip language filter if it's not properly indexed
+                if key in ['document_path', 'module', 'section_type', 'chapter_name']:
+                    conditions.append(FieldCondition(
+                        key=key,
+                        match=MatchValue(value=value)
+                    ))
+                # Skip unsupported filters like 'language' that might not be indexed
+
+            if conditions:
+                search_filter = Filter(must=conditions)
+
+        # Perform the search - use the same approach as the search method
+        if hasattr(self.client, 'search'):
+            results = self.client.search(
+                collection_name=self.collection_name,
+                query_vector=query_embedding,
+                limit=top_k,
+                query_filter=search_filter
+            )
+            # For search method, results is a list of ScoredPoint objects
+            points_list = results
+        elif hasattr(self.client, 'query_points'):
+            response = self.client.query_points(
+                collection_name=self.collection_name,
+                query=query_embedding,
+                limit=top_k,
+                query_filter=search_filter
+            )
+            # For query_points method, response is a QueryResponse object with points attribute
+            # We need to access the points attribute to get the list of ScoredPoint objects
+            from qdrant_client.http.models import QueryResponse
+            if isinstance(response, QueryResponse):
+                points_list = response.points
+            else:
+                # Fallback: if it's already a list (for backward compatibility)
+                points_list = response
+        else:
+            raise AttributeError("Qdrant client does not have 'search' or 'query_points' method")
+
+        # Format the results to match the RetrievedChunk model
+        # Handle different result formats depending on the method used
+        formatted_results = []
+        for result in points_list:
+            # Check if result is a ScoredPoint object (from search) or PointStruct (from query_points)
+            # For ScoredPoint objects from query_points, payload is accessed as result.payload
+            if hasattr(result, 'payload'):
+                if isinstance(result.payload, dict):
+                    # Direct dictionary access
+                    raw_payload = result.payload
+                else:
+                    # If payload is a model object, convert to dict
+                    raw_payload = getattr(result.payload, '__dict__', {})
+                    if not raw_payload and hasattr(result.payload, 'dict'):
+                        raw_payload = result.payload.dict()
+                    elif not raw_payload:
+                        raw_payload = {}
+            else:
+                # Fallback if no payload attribute
+                raw_payload = getattr(result, '__dict__', {}).get('payload', {})
+                if not raw_payload and hasattr(result, '_pb') and hasattr(result._pb, 'payload'):
+                    raw_payload = result._pb.payload
+                else:
+                    raw_payload = {}
+
+            # Extract content from the payload
+            content = raw_payload.get('content', '')
+
+            score = getattr(result, 'score', 0.0)
+
+            # Use the properly extracted payload
+            payload = raw_payload
+
+            chunk_id = getattr(result, 'id', '')
+            source_document = payload.get('document_path', '')
+
+            chunk = RetrievedChunk(
+                content=content,
+                relevance_score=score,
+                metadata=payload,
+                chunk_id=chunk_id,
+                source_document=source_document
+            )
+            formatted_results.append(chunk)
+
+        return formatted_results
 
     def get_point(self, point_id: str):
         """

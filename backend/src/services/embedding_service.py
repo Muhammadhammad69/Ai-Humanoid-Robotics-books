@@ -160,3 +160,48 @@ class EmbeddingService:
             A VectorEmbedding object
         """
         return self.generate_embeddings([chunk])[0]
+
+    async def embed_query(self, query: str) -> List[float]:
+        """
+        Generate embedding for a query string.
+
+        Args:
+            query: The query string to embed
+
+        Returns:
+            A list of floats representing the embedding vector
+        """
+        # Apply rate limiting
+        self._enforce_rate_limit()
+
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                # Call Cohere API to generate embedding for the query
+                self.logger.debug(f"Sending query to Cohere API: {query[:50]}...")
+                response = self.client.embed(
+                    texts=[query],
+                    model=self.settings.COHERE_MODEL,
+                    input_type="search_query",  # Using search_query for user queries
+                )
+
+                # Increment request count
+                self.request_count += 1
+                self.logger.debug(f"Received embedding for query, request count: {self.request_count}")
+
+                # Extract and validate the embedding vector
+                embedding_vector = response.embeddings[0]
+                self._validate_embedding_dimensions(embedding_vector)
+
+                return embedding_vector
+
+            except Exception as e:
+                self.logger.error(f"Error generating embedding for query (attempt {attempt + 1}): {str(e)}")
+
+                if attempt == max_retries - 1:
+                    # Last attempt, re-raise the error with additional context
+                    self.logger.error(f"All retry attempts failed for query embedding. Last error: {str(e)}")
+                    raise e
+
+                # Exponential backoff before retry
+                self._exponential_backoff(attempt)

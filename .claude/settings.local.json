@@ -16,7 +16,8 @@
       "mcp__context7__resolve-library-id",
       "mcp__context7__get-library-docs",
       "Bash(git fetch --all --prune)",
-      "Bash(.specify/scripts/bash/create-phr.sh --title \"Book Embeddings Implementation Plan\" --stage plan --feature \"001-book-embeddings\" --json)"
+      "Bash(.specify/scripts/bash/create-phr.sh --title \"Book Embeddings Implementation Plan\" --stage plan --feature \"001-book-embeddings\" --json)",
+      "SlashCommand(/sp.phr backend-rag-pipeline-planning --stage plan --feature 001-backend-rag-pipeline)"
     ]
   }
 }
