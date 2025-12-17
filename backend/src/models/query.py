@@ -44,7 +44,9 @@ class QueryResponse(BaseModel):
     """
     Response structure containing processed context for LLM consumption
     """
+    query: str = Field(..., min_length=1, description="The original query from the user")
     context: str = Field(..., min_length=1, description="Assembled context ready for LLM")
+    agent_answer: str = Field("", description="AI-generated answer from the agent")
     retrieved_chunks: List[RetrievedChunk] = Field(..., description="Detailed retrieved chunks")
     session_id: str = Field(..., description="Session identifier")
     processing_time: float = Field(..., gt=0, description="Time taken for processing in seconds")

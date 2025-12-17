@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: RAG Pipeline Agent Integration API
+  description: API for processing queries through the RAG pipeline with agent-based answer generation
+  version: 1.0.0
+paths:
+  /query:
+    post:
+      summary: Process query through RAG pipeline with agent answer generation
+      description: Processes a user query through the complete RAG pipeline (Steps 1-5) and then generates an AI answer using an LLM agent (Steps 6-7)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful response with context and agent answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The user's query
+          example: "What are the key concepts in chapter 3?"
+        module:
+          type: string
+          description: Optional module filter
+          example: "Advanced Physics"
+        language:
+          type: string
+          description: Optional language filter
+          example: "en"
+        session_id:
+          type: string
+          description: Optional session ID for conversation continuity
+          example: "session-12345"
+    QueryResponse:
+      type: object
+      required:
+        - context
+        - agent_answer
+        - retrieved_chunks
+        - query_id
+        - processing_time
+      properties:
+        query:
+          type: string
+          description: The original query
+          example: "What are the key concepts in chapter 3?"
+        context:
+          type: string
+          description: Context retrieved from the RAG pipeline (Steps 1-5)
+          example: "Chapter 3 covers advanced physics concepts including..."
+        agent_answer:
+          type: string
+          description: AI-generated answer from the agent (Steps 6-7)
+          example: "The key concepts in chapter 3 include quantum mechanics, wave-particle duality, and the uncertainty principle."
+        retrieved_chunks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetrievedChunk'
+          description: The raw chunks retrieved from the vector database
+        session_id:
+          type: string
+          description: Session identifier
+          example: "session-12345"
+        query_id:
+          type: string
+          description: Unique identifier for this query
+          example: "query-67890"
+        processing_time:
+          type: number
+          format: float
+          description: Total processing time in seconds
+          example: 2.45
+    RetrievedChunk:
+      type: object
+      required:
+        - content
+        - score
+      properties:
+        content:
+          type: string
+          description: The content of the retrieved chunk
+          example: "Quantum mechanics is a fundamental theory in physics..."
+        score:
+          type: number
+          format: float
+          description: Similarity score of this chunk to the query
+          example: 0.87
+        metadata:
+          type: object
+          description: Additional metadata about the chunk
+          example:
+            module: "Advanced Physics"
+            chapter: "3"
+            page: 45
+    ErrorResponse:
+      type: object
+      required:
+        - detail
+      properties:
+        detail:
+          type: string
+          description: Error details
+          example: "Query cannot be empty"

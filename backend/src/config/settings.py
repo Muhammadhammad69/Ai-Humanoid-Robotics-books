@@ -22,6 +22,11 @@ class Settings:
     COHERE_RATE_LIMIT_RPM: int = int(os.getenv("COHERE_RATE_LIMIT_RPM", "60"))
     COHERE_BATCH_SIZE: int = int(os.getenv("COHERE_BATCH_SIZE", "10"))
 
+    # Gemini API Configuration
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    GEMINI_BASE_URL: str = os.getenv("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+
     # Ingestion Configuration
     DOCS_PATH: str = os.getenv("DOCS_PATH", "./docs")
     CHUNK_SIZE_TOKENS: int = int(os.getenv("CHUNK_SIZE_TOKENS", "512"))
@@ -34,6 +39,12 @@ class Settings:
     QUERY_TIMEOUT_SECONDS: int = int(os.getenv("QUERY_TIMEOUT_SECONDS", "30"))
     DUPLICATE_THRESHOLD: float = float(os.getenv("DUPLICATE_THRESHOLD", "0.95"))
 
+    # Agent Configuration
+    AGENT_TEMPERATURE: float = float(os.getenv("AGENT_TEMPERATURE", "0.7"))
+    AGENT_MAX_TOKENS: int = int(os.getenv("AGENT_MAX_TOKENS", "1000"))
+    AGENT_TIMEOUT: int = int(os.getenv("AGENT_TIMEOUT", "30"))
+    AGENT_RETRY_ATTEMPTS: int = int(os.getenv("AGENT_RETRY_ATTEMPTS", "3"))
+
     @classmethod
     def validate(cls) -> None:
         """Validate that all required environment variables are set."""
@@ -41,7 +52,8 @@ class Settings:
             "QDRANT_URL",
             "QDRANT_API_KEY",
             "QDRANT_COLLECTION_NAME",
-            "COHERE_API_KEY"
+            "COHERE_API_KEY",
+            "GEMINI_API_KEY"
         ]
 
         missing_vars = []
@@ -75,6 +87,15 @@ class Settings:
 
         if cls.CHUNK_SIZE_TOKENS <= 0:
             raise ValueError("CHUNK_SIZE_TOKENS must be a positive integer")
+
+        if cls.AGENT_MAX_TOKENS <= 0:
+            raise ValueError("AGENT_MAX_TOKENS must be a positive integer")
+
+        if cls.AGENT_TIMEOUT <= 0:
+            raise ValueError("AGENT_TIMEOUT must be a positive integer")
+
+        if cls.AGENT_RETRY_ATTEMPTS <= 0:
+            raise ValueError("AGENT_RETRY_ATTEMPTS must be a positive integer")
 
 
 # Validate settings at import time

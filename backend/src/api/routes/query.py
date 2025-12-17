@@ -33,7 +33,9 @@ async def process_query(
 
         # Create and return the response
         response = QueryResponse(
+            query=query_request.query,
             context=result["context"],
+            agent_answer=result.get("agent_answer", ""),
             retrieved_chunks=result["retrieved_chunks"],
             session_id=query_request.session_id or str(uuid.uuid4()),
             processing_time=processing_time,

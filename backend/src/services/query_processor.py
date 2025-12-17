@@ -6,6 +6,7 @@ from .embedding_service import EmbeddingService
 from .vector_storage import VectorStorageService
 from .context_filter import ContextFilterService
 from .context_assembler import ContextAssemblerService
+from .agent_service import agent_service
 from ..config.settings import Settings
 
 
@@ -29,7 +30,7 @@ class QueryProcessor:
             query_request: The query request with optional metadata
 
         Returns:
-            Dictionary containing context and retrieved chunks
+            Dictionary containing context, retrieved chunks, and agent answer
         """
         start_time = time.time()
 
@@ -57,13 +58,31 @@ class QueryProcessor:
             # Step 5: Assemble the filtered chunks into context
             context = self.context_assembler_service.assemble_context(filtered_chunks)
 
-            # Log processing time for monitoring (task T022)
-            processing_time = time.time() - start_time
+            # Step 6: Generate answer using AI agent with the assembled context
+            from ..models.agent import AgentRequest
+            agent_request = AgentRequest(
+                query=query_request.query,
+                context=context
+            )
+            agent_start_time = time.time()
+            agent_response = await agent_service.generate_answer(agent_request)
+            agent_processing_time = time.time() - agent_start_time
+
+            # Log processing time for monitoring (task T020)
+            total_processing_time = time.time() - start_time
+
+            # Add performance metrics logging
+            print(f"Performance Metrics - Total: {total_processing_time:.2f}s, Agent: {agent_processing_time:.2f}s")
+            if total_processing_time > 5.0:
+                print(f"WARNING: Total processing time exceeded SLA: {total_processing_time:.2f}s")
+            if agent_processing_time > 3.0:
+                print(f"WARNING: Agent processing time exceeded threshold: {agent_processing_time:.2f}s")
 
             return {
                 "context": context,
                 "retrieved_chunks": filtered_chunks,
-                "processing_time": processing_time
+                "agent_answer": agent_response.agent_answer,
+                "processing_time": total_processing_time
             }
 
         except Exception as e:
@@ -79,6 +98,7 @@ class QueryProcessor:
                 return {
                     "context": "",
                     "retrieved_chunks": [],
+                    "agent_answer": "",
                     "processing_time": processing_time
                 }
 
@@ -93,7 +113,7 @@ class QueryProcessor:
             query_request: The query request to validate and process
 
         Returns:
-            Dictionary containing context and retrieved chunks
+            Dictionary containing context, retrieved chunks, and agent answer
         """
         # This method integrates validation logic (task T014)
         # Validation is already handled by Pydantic models, but we can add
@@ -136,13 +156,31 @@ class QueryProcessor:
             # Step 5: Assemble the filtered chunks into context
             context = self.context_assembler_service.assemble_context(filtered_chunks)
 
+            # Step 6: Generate answer using AI agent with the assembled context
+            from ..models.agent import AgentRequest
+            agent_request = AgentRequest(
+                query=query_request.query,
+                context=context
+            )
+            agent_start_time = time.time()
+            agent_response = await agent_service.generate_answer(agent_request)
+            agent_processing_time = time.time() - agent_start_time
+
             # Log processing time for monitoring
-            processing_time = time.time() - start_time
+            total_processing_time = time.time() - start_time
+
+            # Add performance metrics logging
+            print(f"Performance Metrics - Total: {total_processing_time:.2f}s, Agent: {agent_processing_time:.2f}s")
+            if total_processing_time > 5.0:
+                print(f"WARNING: Total processing time exceeded SLA: {total_processing_time:.2f}s")
+            if agent_processing_time > 3.0:
+                print(f"WARNING: Agent processing time exceeded threshold: {agent_processing_time:.2f}s")
 
             return {
                 "context": context,
                 "retrieved_chunks": filtered_chunks,
-                "processing_time": processing_time
+                "agent_answer": agent_response.agent_answer,
+                "processing_time": total_processing_time
             }
 
         except Exception as e:
@@ -151,6 +189,15 @@ class QueryProcessor:
             # Handle empty query case
             if not query_request.query or len(query_request.query.strip()) == 0:
                 raise ValueError("Query cannot be empty")
+
+            # Handle case where no results are found
+            if hasattr(e, 'status_code') and e.status_code == 404:
+                return {
+                    "context": "",
+                    "retrieved_chunks": [],
+                    "agent_answer": "",
+                    "processing_time": processing_time
+                }
 
             # Re-raise other exceptions
             raise e
@@ -185,13 +232,31 @@ class QueryProcessor:
             # Step 5: Assemble the filtered chunks into context with enhanced features (task T036)
             context = self.context_assembler_service.assemble_with_enhanced_features(filtered_chunks)
 
+            # Step 6: Generate answer using AI agent with the assembled context
+            from ..models.agent import AgentRequest
+            agent_request = AgentRequest(
+                query=query_request.query,
+                context=context
+            )
+            agent_start_time = time.time()
+            agent_response = await agent_service.generate_answer(agent_request)
+            agent_processing_time = time.time() - agent_start_time
+
             # Log processing time for monitoring
-            processing_time = time.time() - start_time
+            total_processing_time = time.time() - start_time
+
+            # Add performance metrics logging
+            print(f"Performance Metrics - Total: {total_processing_time:.2f}s, Agent: {agent_processing_time:.2f}s")
+            if total_processing_time > 5.0:
+                print(f"WARNING: Total processing time exceeded SLA: {total_processing_time:.2f}s")
+            if agent_processing_time > 3.0:
+                print(f"WARNING: Agent processing time exceeded threshold: {agent_processing_time:.2f}s")
 
             return {
                 "context": context,
                 "retrieved_chunks": filtered_chunks,
-                "processing_time": processing_time
+                "agent_answer": agent_response.agent_answer,
+                "processing_time": total_processing_time
             }
 
         except Exception as e:
@@ -200,6 +265,15 @@ class QueryProcessor:
             # Handle empty query case
             if not query_request.query or len(query_request.query.strip()) == 0:
                 raise ValueError("Query cannot be empty")
+
+            # Handle case where no results are found
+            if hasattr(e, 'status_code') and e.status_code == 404:
+                return {
+                    "context": "",
+                    "retrieved_chunks": [],
+                    "agent_answer": "",
+                    "processing_time": processing_time
+                }
 
             # Re-raise other exceptions
             raise e
@@ -234,13 +308,31 @@ class QueryProcessor:
             # Step 5: Assemble the filtered chunks into context
             context = self.context_assembler_service.assemble_context(filtered_chunks)
 
+            # Step 6: Generate answer using AI agent with the assembled context
+            from ..models.agent import AgentRequest
+            agent_request = AgentRequest(
+                query=query_request.query,
+                context=context
+            )
+            agent_start_time = time.time()
+            agent_response = await agent_service.generate_answer(agent_request)
+            agent_processing_time = time.time() - agent_start_time
+
             # Log processing time for monitoring
-            processing_time = time.time() - start_time
+            total_processing_time = time.time() - start_time
+
+            # Add performance metrics logging
+            print(f"Performance Metrics - Total: {total_processing_time:.2f}s, Agent: {agent_processing_time:.2f}s")
+            if total_processing_time > 5.0:
+                print(f"WARNING: Total processing time exceeded SLA: {total_processing_time:.2f}s")
+            if agent_processing_time > 3.0:
+                print(f"WARNING: Agent processing time exceeded threshold: {agent_processing_time:.2f}s")
 
             return {
                 "context": context,
                 "retrieved_chunks": filtered_chunks,
-                "processing_time": processing_time
+                "agent_answer": agent_response.agent_answer,
+                "processing_time": total_processing_time
             }
 
         except Exception as e:
@@ -249,6 +341,15 @@ class QueryProcessor:
             # Handle empty query case
             if not query_request.query or len(query_request.query.strip()) == 0:
                 raise ValueError("Query cannot be empty")
+
+            # Handle case where no results are found
+            if hasattr(e, 'status_code') and e.status_code == 404:
+                return {
+                    "context": "",
+                    "retrieved_chunks": [],
+                    "agent_answer": "",
+                    "processing_time": processing_time
+                }
 
             # Re-raise other exceptions
             raise e
@@ -308,28 +409,58 @@ class QueryProcessor:
             # Step 5: Assemble the filtered chunks into context
             context = self.context_assembler_service.assemble_context(filtered_chunks)
 
-            # Log processing time for monitoring (task T049)
-            processing_time = time.time() - start_time
+            # Step 6: Generate answer using AI agent with the assembled context
+            from ..models.agent import AgentRequest
+            agent_request = AgentRequest(
+                query=sanitized_query,
+                context=context
+            )
+            agent_start_time = time.time()
+            agent_response = await agent_service.generate_answer(agent_request)
+            agent_processing_time = time.time() - agent_start_time
 
-            # Performance SLA check: Ensure response time < 5 seconds
-            if processing_time > 5.0:
-                print(f"WARNING: Processing time exceeded SLA: {processing_time}s")
+            # Log processing time for monitoring (task T049)
+            total_processing_time = time.time() - start_time
+
+            # Add performance metrics logging
+            print(f"Performance Metrics - Total: {total_processing_time:.2f}s, Agent: {agent_processing_time:.2f}s")
+            if total_processing_time > 5.0:
+                print(f"WARNING: Total processing time exceeded SLA: {total_processing_time:.2f}s")
+            if agent_processing_time > 3.0:
+                print(f"WARNING: Agent processing time exceeded threshold: {agent_processing_time:.2f}s")
 
             return {
                 "context": context,
                 "retrieved_chunks": filtered_chunks,
-                "processing_time": processing_time
+                "agent_answer": agent_response.agent_answer,
+                "processing_time": total_processing_time
             }
 
         except ValueError as e:
             # Handle validation errors
             processing_time = time.time() - start_time
             print(f"Validation error after {processing_time}s: {str(e)}")
+            # Return a response with empty agent answer in case of validation error
+            if hasattr(e, 'status_code') and e.status_code == 404:
+                return {
+                    "context": "",
+                    "retrieved_chunks": [],
+                    "agent_answer": "",
+                    "processing_time": processing_time
+                }
             raise
         except Exception as e:
             # Handle general errors
             processing_time = time.time() - start_time
             print(f"General error after {processing_time}s: {str(e)}")
+            # Return a response with empty agent answer in case of general error
+            if hasattr(e, 'status_code') and e.status_code == 404:
+                return {
+                    "context": "",
+                    "retrieved_chunks": [],
+                    "agent_answer": "",
+                    "processing_time": processing_time
+                }
             raise
 
     def _contains_potentially_harmful_content(self, query: str) -> bool:
