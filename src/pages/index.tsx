@@ -6,6 +6,8 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Translate, {translate} from '@docusaurus/Translate';
+import chatbotApi from '@site/src/services/chatbot-api';
+
 
 import styles from './index.module.css';
 
@@ -34,6 +36,9 @@ function HomepageHeader() {
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
+  const backendUrl = siteConfig.customFields.backendUrl
+  chatbotApi.setBackendEndpoint(backendUrl);
+  console.log("Backend URL from site config:", backendUrl);
 
   // Define learning outcomes data structure
   const learningOutcomes = [
